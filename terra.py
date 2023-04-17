@@ -60,7 +60,7 @@ class Terra(Dataset):
 
         label = label.squeeze(-1).astype(np.compat.long)
         label -= 2
-        data = np.hstack([coord, rgb]).astype(np.float32)
+        data = np.hstack([coord]).astype(np.float32)
         return torch.tensor(data), torch.tensor(label)
 
     def __len__(self):
