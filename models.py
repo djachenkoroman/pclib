@@ -6,14 +6,8 @@ import torch.utils.data
 from torch.autograd import Variable
 import numpy as np
 import torch.nn.functional as F
-import os
-import pickle
-import logging
-import numpy as np
-from tqdm import tqdm
-import torch
-from torch.utils.data import Dataset
-import torch.optim as optim
+
+
 class STN3d(nn.Module):
     def __init__(self):
         super(STN3d, self).__init__()
@@ -185,6 +179,38 @@ def feature_transform_regularizer(trans):
     batchsize = trans.size()[0]
     I = torch.eye(d)[None, :, :]
     if trans.is_cuda:
-        I = I.to(device)
+        I = I.cuda()
     loss = torch.mean(torch.norm(torch.bmm(trans, trans.transpose(2,1)) - I, dim=(1,2)))
     return loss
+
+if __name__ == '__main__':
+    sim_data = Variable(torch.rand(32,3,2500))
+    print(sim_data)
+    trans = STN3d()
+    out = trans(sim_data)
+    print(out)
+
+    print('stn', out.size())
+    print('loss', feature_transform_regularizer(out))
+
+    sim_data_64d = Variable(torch.rand(32, 64, 2500))
+    trans = STNkd(k=64)
+    out = trans(sim_data_64d)
+    print('stn64d', out.size())
+    print('loss', feature_transform_regularizer(out))
+
+    pointfeat = PointNetfeat(global_feat=True)
+    out, _, _ = pointfeat(sim_data)
+    print('global feat', out.size())
+
+    pointfeat = PointNetfeat(global_feat=False)
+    out, _, _ = pointfeat(sim_data)
+    print('point feat', out.size())
+
+    cls = PointNetCls(k = 5)
+    out, _, _ = cls(sim_data)
+    print('class', out.size())
+
+    seg = PointNetDenseCls(k = 3)
+    out, _, _ = seg(sim_data)
+    print('seg', out.size())
