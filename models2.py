@@ -8,8 +8,8 @@ import numpy as np
 import torch.nn.functional as F
 
 class STN3d(nn.Module):
-    def _init_(self):
-        super(STN3d, self)._init_()
+    def __init__(self):
+        super(STN3d, self).__init__()
         self.conv1 = torch.nn.Conv1d(6, 64, 1)
         self.conv2 = torch.nn.Conv1d(64, 128, 1)
         self.conv3 = torch.nn.Conv1d(128, 1024, 1)
@@ -46,8 +46,8 @@ class STN3d(nn.Module):
 
 
 class STNkd(nn.Module):
-    def _init_(self, k=64):
-        super(STNkd, self)._init_()
+    def __init__(self, k=64):
+        super(STNkd, self).__init__()
         self.conv1 = torch.nn.Conv1d(k, 64, 1)
         self.conv2 = torch.nn.Conv1d(64, 128, 1)
         self.conv3 = torch.nn.Conv1d(128, 1024, 1)
@@ -84,8 +84,8 @@ class STNkd(nn.Module):
         return x
 
 class PointNetfeat(nn.Module):
-    def _init_(self, global_feat = True, feature_transform = False):
-        super(PointNetfeat, self)._init_()
+    def __init__(self, global_feat = True, feature_transform = False):
+        super(PointNetfeat, self).__init__()
         self.stn = STNkd(k=6)
         self.conv1 = torch.nn.Conv1d(6, 64, 1)
         self.conv2 = torch.nn.Conv1d(64, 128, 1)
@@ -126,8 +126,8 @@ class PointNetfeat(nn.Module):
             return torch.cat([x, pointfeat], 1), trans, trans_feat
 
 class PointNetCls(nn.Module):
-    def _init_(self, k=2, feature_transform=False):
-        super(PointNetCls, self)._init_()
+    def __init__(self, k=2, feature_transform=False):
+        super(PointNetCls, self).__init__()
         self.feature_transform = feature_transform
         self.feat = PointNetfeat(global_feat=True, feature_transform=feature_transform)
         self.fc1 = nn.Linear(1024, 512)
@@ -147,8 +147,8 @@ class PointNetCls(nn.Module):
 
 
 class PointNetDenseCls(nn.Module):
-    def _init_(self, k = 2, feature_transform=False):
-        super(PointNetDenseCls, self)._init_()
+    def __init__(self, k = 2, feature_transform=False):
+        super(PointNetDenseCls, self).__init__()
         self.k = k
         self.feature_transform=feature_transform
         self.feat = PointNetfeat(global_feat=False, feature_transform=feature_transform)
