@@ -94,7 +94,7 @@ class PointNetDenseCls(nn.Module):
         self.channels = channels
         self.num_classes = num_classes
         self.feature_transform=feature_transform
-        self.feat = PointNetfeat(global_feat=False, feature_transform=feature_transform)
+        self.feat = PointNetfeat(channels=self.channels, global_feat=False, feature_transform=feature_transform)
         self.conv1 = torch.nn.Conv1d(1088, 512, 1)
         self.conv2 = torch.nn.Conv1d(512, 256, 1)
         self.conv3 = torch.nn.Conv1d(256, 128, 1)
