@@ -89,7 +89,7 @@ class PointNetfeat(nn.Module):
 
 
 class PointNetDenseCls(nn.Module):
-    def __init__(self, channels=6, num_classes = 2, feature_transform=False):
+    def __init__(self, channels = 6, num_classes = 2, feature_transform=False):
         super(PointNetDenseCls, self).__init__()
         self.channels = channels
         self.num_classes = num_classes
