@@ -32,7 +32,7 @@ def preprocess(data_root, data_dir, GRID_SIZE):
     return num_classes, classes
 
 
-def pointcloud_seg(
+def pointcloud_pointnet_seg(
         data,
         pred_path,
         checkpoint_path,
@@ -107,7 +107,7 @@ def pointcloud_seg(
     return preds, points
 
 
-def pointcloud_seg_real(
+def pointcloud_pointnet_seg_real(
         data,
         pred_path,
         checkpoint_path,
