@@ -107,7 +107,7 @@ def pointcloud_seg(
     return preds, points
 
 
-def pointcloud_seg2(
+def pointcloud_seg_real(
         data,
         pred_path,
         checkpoint_path,
