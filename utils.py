@@ -152,7 +152,7 @@ def pointcloud_pointnet_seg_real(
             else:
                 arr = coord.astype(np.float32)
             points.append(arr)
-            points_in.append(cdata)
+            points_in.append(cdata[:, :3])
             arr = torch.FloatTensor(arr).to(device)
             arr = torch.unsqueeze(arr, dim=0)
             arr = arr.transpose(2, 1)
