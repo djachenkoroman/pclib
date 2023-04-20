@@ -140,8 +140,8 @@ def pointcloud_pointnet_seg_real(
         for j in range(y_min, y_max - GRID_SIZE, GRID_SIZE):
             choice = np.random.choice(len(data), npoints, replace=True)
             cdata = data[choice, :]
-            if cdata.shape[1] == 3:
-                coord = cdata
+            if channels == 3:
+                coord = cdata[:, :3]
             else:
                 coord, rgb = cdata[:, :3], cdata[:, 3:]
             coord = coord - np.expand_dims(np.mean(coord, axis=0), 0)  # center
