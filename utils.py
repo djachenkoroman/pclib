@@ -157,14 +157,15 @@ def pointcloud_pointnet_seg_real(
             arr = torch.unsqueeze(arr, dim=0)
             arr = arr.transpose(2, 1)
             pred_tuple = model(arr)
-            if type(pred_tuple) == tuple:
-                if len(pred_tuple) == 2:
-                    pred, _ = pred_tuple
-                elif len(pred_tuple) == 3:
-                    pred, _, _ = pred_tuple
-            else:
-                pred = pred_tuple
-
+            print(len(pred_tuple))
+            # if type(pred_tuple) == tuple:
+            #     if len(pred_tuple) == 2:
+            #         pred, _ = pred_tuple
+            #     elif len(pred_tuple) == 3:
+            #         pred, _, _ = pred_tuple
+            # else:
+            #     pred = pred_tuple
+            pred = pred_tuple
             pred_choice = pred.data.max(2)[1]
             pred = pred_choice.cpu().data.numpy()
             preds.append(pred)
