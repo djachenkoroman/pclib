@@ -117,6 +117,7 @@ def pointcloud_pointnet_seg_real(
         device='cpu',
         npoints=2400
 ):
+    print("channels={0}\nnum_classes={1}\nnpoints={2}".format(channels,num_classes,npoints))
     model = PointNetDenseCls(channels=channels, num_classes=num_classes)
     # model.load_state_dict(torch.load(checkpoint_path, map_location=torch.device('cpu')))
     model.load_state_dict(torch.load(checkpoint_path))
@@ -146,7 +147,7 @@ def pointcloud_pointnet_seg_real(
             coord = coord - np.expand_dims(np.mean(coord, axis=0), 0)  # center
             dist = np.max(np.sqrt(np.sum(coord ** 2, axis=1)), 0)
             coord = coord / dist  # scale
-            if cdata.shape[1] == 6:
+            if channels == 6:
                 arr = np.hstack([coord, rgb]).astype(np.float32)
             else:
                 arr = coord.astype(np.float32)
