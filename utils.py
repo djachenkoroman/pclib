@@ -35,7 +35,7 @@ def preprocess(data_root, data_dir, GRID_SIZE):
 def preprocess2(data_root, data_dir, grid_size):
     dbg=True
 
-    if dbg: print("params\ndata_root:{0}\ndata_dir:{1}\nGRID_SIZE:{3}".format(data_root, data_dir, grid_size))
+    if dbg: print("params\ndata_root:{0}\ndata_dir:{1}\nGRID_SIZE:{2}".format(data_root, data_dir, grid_size))
     os.makedirs(data_dir, exist_ok=False)
     data = np.loadtxt(data_root)
     classes = set(data[:, -1])
