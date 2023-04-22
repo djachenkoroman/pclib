@@ -32,6 +32,37 @@ def preprocess(data_root, data_dir, GRID_SIZE):
     return num_classes, classes
 
 
+def preprocess2(data_root, data_dir, grid_size):
+    dbg=True
+
+    if dbg: print("params\ndata_root:{0}\ndata_dir:{1}\nGRID_SIZE:{3}".format(data_root, data_dir, grid_size))
+    os.makedirs(data_dir, exist_ok=False)
+    data = np.loadtxt(data_root)
+    classes = set(data[:, -1])
+    num_classes = len(classes)
+    idx = 0
+    x = data[:, 0]
+    y = data[:, 1]
+    x_max = int(np.max(x)) + 1
+    x_min = int(np.min(x)) - 1
+    y_max = int(np.max(y)) + 1
+    y_min = int(np.min(y)) - 1
+    del x
+    del y
+
+    for i in range(x_min, x_max - grid_size, grid_size):
+        for j in range(y_min, y_max - grid_size, grid_size):
+            arr = data[
+                (data[:, 0] > i) & (data[:, 0] < i + grid_size) & (data[:, 1] > j) & (data[:, 1] < j + grid_size)]
+            fn='{0}/{1}.txt'.format(data_dir,str(idx).zfill(5))
+            # np.save(f'{data_dir}/{idx}.npy', arr)
+            if dbg: print(fn)
+            np.savetxt(fn,arr,delimiter=',')
+            idx += 1
+    del data
+    return num_classes, classes
+
+
 def pointcloud_pointnet_seg(
         data,
         pred_path,
