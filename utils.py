@@ -40,6 +40,11 @@ def preprocess2(data_root, data_dir, grid_size):
     if dbg: print("params\ndata_root:{0}\ndata_dir:{1}\nGRID_SIZE:{2}\ndata.shape:{3}".format(data_root, data_dir, grid_size, data.shape))
     classes = set(data[:, -1])
     num_classes = len(classes)
+    if data.shape[1]==4:
+        fmt = '%1.6f', '%1.6f', '%1.6f', '%d'
+    elif data.shape[1]==7:
+        fmt = '%1.6f', '%1.6f', '%1.6f', '%d', '%d', '%d', '%d'
+
     idx = 0
     x = data[:, 0]
     y = data[:, 1]
@@ -57,7 +62,7 @@ def preprocess2(data_root, data_dir, grid_size):
             fn='{0}/{1}.txt'.format(data_dir,str(idx).zfill(5))
             # np.save(f'{data_dir}/{idx}.npy', arr)
             if dbg: print(fn)
-            np.savetxt(fn,arr,delimiter=',')
+            np.savetxt(fn,arr,delimiter=',',fmt=fmt)
             idx += 1
     del data
     return num_classes, classes
