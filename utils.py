@@ -60,7 +60,6 @@ def preprocess2(data_root, data_dir, grid_size):
             arr = data[
                 (data[:, 0] > i) & (data[:, 0] < i + grid_size) & (data[:, 1] > j) & (data[:, 1] < j + grid_size)]
             fn='{0}/{1}.txt'.format(data_dir,str(idx).zfill(5))
-            # np.save(f'{data_dir}/{idx}.npy', arr)
             if dbg: print(fn)
             np.savetxt(fn,arr,delimiter=',',fmt=fmt)
             idx += 1
