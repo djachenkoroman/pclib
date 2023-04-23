@@ -35,12 +35,9 @@ def preprocess(data_root, data_dir, GRID_SIZE):
 def preprocess2(data_root, data_dir, grid_size):
     dbg=True
     fmt = '%1.6f', '%1.6f', '%1.6f', '%d', '%d', '%d', '%d'
-    if dbg: print("params\ndata_root:{0}\ndata_dir:{1}\nGRID_SIZE:{2}\ndata.shape:{3}".format(data_root, data_dir, grid_size))
     os.makedirs(data_dir, exist_ok=False)
     data = np.loadtxt(data_root)
-
     if dbg: print("params\ndata_root:{0}\ndata_dir:{1}\nGRID_SIZE:{2}\ndata.shape:{3}".format(data_root, data_dir, grid_size, data.shape))
-
     classes = set(data[:, -1])
     num_classes = len(classes)
     idx = 0
