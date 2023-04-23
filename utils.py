@@ -37,13 +37,13 @@ def preprocess2(data_root, data_dir, grid_size):
     fmt = '%1.6f', '%1.6f', '%1.6f', '%d', '%d', '%d', '%d'
     os.makedirs(data_dir, exist_ok=False)
     data = np.loadtxt(data_root)
-    if dbg: print("params\ndata_root:{0}\ndata_dir:{1}\nGRID_SIZE:{2}\ndata.shape:{3}".format(data_root, data_dir, grid_size, data.shape))
     classes = set(data[:, -1])
     num_classes = len(classes)
     if data.shape[1]==4:
         fmt = '%1.6f', '%1.6f', '%1.6f', '%d'
     elif data.shape[1]==7:
         fmt = '%1.6f', '%1.6f', '%1.6f', '%d', '%d', '%d', '%d'
+    if dbg: print("params\ndata_root:{0}\ndata_dir:{1}\nGRID_SIZE:{2}\ndata.shape:{3}\nclasses:{4}\nnum_classes:{5}\nfmt:{6}".format(data_root, data_dir, grid_size, data.shape,classes),num_classes,fmt)
 
     idx = 0
     x = data[:, 0]
