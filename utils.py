@@ -75,7 +75,7 @@ def preprocess3(data_root, data_dir, grid_size, channels=3, npoints=2400, dbg=Tr
         fmt = '%1.6f', '%1.6f', '%1.6f'
     elif channels==6:
         fmt = '%1.6f', '%1.6f', '%1.6f', '%d', '%d', '%d'
-    if dbg: print("params\ndata_root:{0}\ndata_dir:{1}\nGRID_SIZE:{2}\ndata.shape:{3}\nclasses:{4}\nnum_classes:{5}\nfmt:{6}".format(data_root, data_dir, grid_size, data.shape,classes,num_classes,fmt))
+    if dbg: print("params\ndata_root:{0}\ndata_dir:{1}\nGRID_SIZE:{2}\ndata.shape:{3}\nfmt:{4}".format(data_root, data_dir, grid_size, data.shape,fmt))
 
 #     idx = 0
 #     x = data[:, 0]
