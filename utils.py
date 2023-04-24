@@ -110,7 +110,13 @@ def preprocess3(data_root, data_dir, grid_size, channels=3, npoints=2400, dbg=Tr
                 arr = np.hstack([coord, rgb]).astype(np.float32)
             else:
                 arr = coord.astype(np.float32)
+            print(arr.shape)
 
+            arr = torch.FloatTensor(arr).to(device)
+            print(arr.shape)
+            arr = torch.unsqueeze(arr, dim=0)
+            print(arr.shape)
+            arr = arr.transpose(2, 1)
             print(arr.shape)
 
             idx += 1
