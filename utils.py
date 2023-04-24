@@ -112,7 +112,8 @@ def preprocess3(data_root, data_dir, grid_size, channels=3, npoints=2400, dbg=Tr
                 arr = coord.astype(np.float32)
             print(arr.shape)
 
-            arr = torch.FloatTensor(arr).to(device)
+            # arr = torch.FloatTensor(arr).to(device)
+            arr = torch.FloatTensor(arr)
             print(arr.shape)
             arr = torch.unsqueeze(arr, dim=0)
             print(arr.shape)
