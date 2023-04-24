@@ -77,31 +77,47 @@ def preprocess3(data_root, data_dir, grid_size, channels=3, npoints=2400, dbg=Tr
         fmt = '%1.6f', '%1.6f', '%1.6f', '%d', '%d', '%d'
     if dbg: print("params\ndata_root:{0}\ndata_dir:{1}\nGRID_SIZE:{2}\ndata.shape:{3}\nchannels:{4}\nnpoints:{5}".format(data_root, data_dir, grid_size, data.shape,channels,npoints))
 
-#     idx = 0
-#     x = data[:, 0]
-#     y = data[:, 1]
-#     x_max = int(np.max(x)) + 1
-#     x_min = int(np.min(x)) - 1
-#     y_max = int(np.max(y)) + 1
-#     y_min = int(np.min(y)) - 1
-#     del x
-#     del y
-#
-#     for i in range(x_min, x_max - grid_size, grid_size):
-#         for j in range(y_min, y_max - grid_size, grid_size):
-#             arr = data[
-#                 (data[:, 0] > i) & (data[:, 0] < i + grid_size) & (data[:, 1] > j) & (data[:, 1] < j + grid_size)]
-#             fn='{0}/{1}.txt'.format(data_dir,str(idx).zfill(5))
-#             if dbg: print(fn)
-#             choice = np.random.choice(len(arr), npoints, replace=True)
-#             arr=arr[choice,:]
-#             np.savetxt(fn,arr,delimiter=',',fmt=fmt)
-#             print(arr.shape)
-#             idx += 1
-#     del data
-#     return num_classes, classes
-#
-#
+    idx = 0
+    x = data[:, 0]
+    y = data[:, 1]
+    x_max = int(np.max(x)) + 1
+    x_min = int(np.min(x)) - 1
+    y_max = int(np.max(y)) + 1
+    y_min = int(np.min(y)) - 1
+    del x
+    del y
+
+    for i in range(x_min, x_max - grid_size, grid_size):
+        for j in range(y_min, y_max - grid_size, grid_size):
+            arr = data[
+                (data[:, 0] > i) & (data[:, 0] < i + grid_size) & (data[:, 1] > j) & (data[:, 1] < j + grid_size)]
+            fn='{0}/{1}.txt'.format(data_dir,str(idx).zfill(5))
+            if dbg: print(fn)
+            choice = np.random.choice(len(arr), npoints, replace=True)
+            arr=arr[choice,:]
+            # np.savetxt(fn,arr,delimiter=',',fmt=fmt)
+            print(arr.shape)
+
+            if channels == 3:
+                coord = arr
+            else:
+                coord, rgb = arr[:, :3], arr[:, 3:]
+            coord = coord - np.expand_dims(np.mean(coord, axis=0), 0)  # center
+            dist = np.max(np.sqrt(np.sum(coord ** 2, axis=1)), 0)
+            coord = coord / dist  # scale
+
+            if channels == 6:
+                arr = np.hstack([coord, rgb]).astype(np.float32)
+            else:
+                arr = coord.astype(np.float32)
+
+            print(arr.shape)
+
+            idx += 1
+    del data
+    return num_classes, classes
+
+
 def pointcloud_pointnet_seg(
         data,
         pred_path,
