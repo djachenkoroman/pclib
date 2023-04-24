@@ -67,6 +67,43 @@ def preprocess2(data_root, data_dir, grid_size):
     return num_classes, classes
 
 
+def preprocess3(data_root, data_dir, grid_size, npoints):
+    dbg=True
+    fmt = '%1.6f', '%1.6f', '%1.6f', '%d', '%d', '%d', '%d'
+    os.makedirs(data_dir, exist_ok=False)
+    data = np.loadtxt(data_root)
+    classes = set(data[:, -1])
+    num_classes = len(classes)
+    if data.shape[1]==4:
+        fmt = '%1.6f', '%1.6f', '%1.6f', '%d'
+    elif data.shape[1]==7:
+        fmt = '%1.6f', '%1.6f', '%1.6f', '%d', '%d', '%d', '%d'
+    if dbg: print("params\ndata_root:{0}\ndata_dir:{1}\nGRID_SIZE:{2}\ndata.shape:{3}\nclasses:{4}\nnum_classes:{5}\nfmt:{6}".format(data_root, data_dir, grid_size, data.shape,classes,num_classes,fmt))
+
+    idx = 0
+    x = data[:, 0]
+    y = data[:, 1]
+    x_max = int(np.max(x)) + 1
+    x_min = int(np.min(x)) - 1
+    y_max = int(np.max(y)) + 1
+    y_min = int(np.min(y)) - 1
+    del x
+    del y
+
+    for i in range(x_min, x_max - grid_size, grid_size):
+        for j in range(y_min, y_max - grid_size, grid_size):
+            arr = data[
+                (data[:, 0] > i) & (data[:, 0] < i + grid_size) & (data[:, 1] > j) & (data[:, 1] < j + grid_size)]
+            fn='{0}/{1}.txt'.format(data_dir,str(idx).zfill(5))
+            if dbg: print(fn)
+            choice = np.random.choice(len(arr), npoints, replace=True)
+            arr=arr[choice,:]
+            np.savetxt(fn,arr,delimiter=',',fmt=fmt)
+            idx += 1
+    del data
+    return num_classes, classes
+
+
 def pointcloud_pointnet_seg(
         data,
         pred_path,
