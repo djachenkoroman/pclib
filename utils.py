@@ -67,7 +67,7 @@ def preprocess2(data_root, data_dir, grid_size):
     return num_classes, classes
 
 
-def preprocess3(data_root, data_dir, grid_size, npoints, dbg=True):
+def preprocess3(data_root, data_dir, grid_size, npoints, dbg=False):
     # dbg=True
     fmt = '%1.6f', '%1.6f', '%1.6f', '%d', '%d', '%d', '%d'
     os.makedirs(data_dir, exist_ok=False)
@@ -99,6 +99,7 @@ def preprocess3(data_root, data_dir, grid_size, npoints, dbg=True):
             choice = np.random.choice(len(arr), npoints, replace=True)
             arr=arr[choice,:]
             np.savetxt(fn,arr,delimiter=',',fmt=fmt)
+            print(arr.shape)
             idx += 1
     del data
     return num_classes, classes
