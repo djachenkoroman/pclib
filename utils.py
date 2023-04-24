@@ -67,8 +67,8 @@ def preprocess2(data_root, data_dir, grid_size):
     return num_classes, classes
 
 
-def preprocess3(data_root, data_dir, grid_size, npoints):
-    dbg=True
+def preprocess3(data_root, data_dir, grid_size, npoints, dbg=True):
+    # dbg=True
     fmt = '%1.6f', '%1.6f', '%1.6f', '%d', '%d', '%d', '%d'
     os.makedirs(data_dir, exist_ok=False)
     data = np.loadtxt(data_root)
