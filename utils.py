@@ -95,30 +95,30 @@ def preprocess3(data_root, data_dir, grid_size, channels=3, npoints=2400, dbg=Tr
             if dbg: print(fn)
             choice = np.random.choice(len(arr), npoints, replace=True)
             arr=arr[choice,:]
-            # np.savetxt(fn,arr,delimiter=',',fmt=fmt)
-            print(arr.shape)
-
-            if channels == 3:
-                coord = arr
-            else:
-                coord, rgb = arr[:, :3], arr[:, 3:]
-            coord = coord - np.expand_dims(np.mean(coord, axis=0), 0)  # center
-            dist = np.max(np.sqrt(np.sum(coord ** 2, axis=1)), 0)
-            coord = coord / dist  # scale
-
-            if channels == 6:
-                arr = np.hstack([coord, rgb]).astype(np.float32)
-            else:
-                arr = coord.astype(np.float32)
-            print(arr.shape)
-
-            # arr = torch.FloatTensor(arr).to(device)
-            arr = torch.FloatTensor(arr)
-            print(arr.shape)
-            arr = torch.unsqueeze(arr, dim=0)
-            print(arr.shape)
-            arr = arr.transpose(2, 1)
-            print(arr.shape)
+            np.savetxt(fn,arr,delimiter=',',fmt=fmt)
+            # print(arr.shape)
+            #
+            # if channels == 3:
+            #     coord = arr
+            # else:
+            #     coord, rgb = arr[:, :3], arr[:, 3:]
+            # coord = coord - np.expand_dims(np.mean(coord, axis=0), 0)  # center
+            # dist = np.max(np.sqrt(np.sum(coord ** 2, axis=1)), 0)
+            # coord = coord / dist  # scale
+            #
+            # if channels == 6:
+            #     arr = np.hstack([coord, rgb]).astype(np.float32)
+            # else:
+            #     arr = coord.astype(np.float32)
+            # print(arr.shape)
+            #
+            # # arr = torch.FloatTensor(arr).to(device)
+            # arr = torch.FloatTensor(arr)
+            # print(arr.shape)
+            # arr = torch.unsqueeze(arr, dim=0)
+            # print(arr.shape)
+            # arr = arr.transpose(2, 1)
+            # print(arr.shape)
 
             idx += 1
     del data
