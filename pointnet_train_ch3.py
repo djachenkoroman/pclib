@@ -64,3 +64,9 @@ if __name__ == '__main__':
     print("epochs: {0}".format(args.epochs))
 
     num_classes, classes = preprocess(os.path.join(args.dsfile), os.path.join(args.dsdir), args.gridsize)
+    train_dataset = Terra(dataset_dir, data_augmentation=True)
+    test_dataset = Terra(dataset_dir, split='test')
+    train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=params['batch_size'],
+                                                   shuffle=params['shuffle'], num_workers=params['num_workers'])
+    test_dataloader = torch.utils.data.DataLoader(test_dataset, batch_size=params['batch_size'],
+                                                  shuffle=params['shuffle'], num_workers=params['num_workers'])
