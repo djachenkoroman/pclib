@@ -48,7 +48,7 @@ fn_templ='/content/models/model_pointnet_terra_curve_ch{0}_ep{1}_acc{2}'
 
 if __name__ == '__main__':
     print("dataset file: {0}".format(args.dsfile))
-    if not os.path.isdir(args.moddir):
+    if not os.path.isfile(args.dsfile):
         sys.exit("dsfile not found")
 
     print("models directory: {0}".format(args.moddir))
