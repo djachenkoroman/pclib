@@ -49,4 +49,4 @@ if __name__ == '__main__':
     if not os.path.isdir(args.moddir):
         sys.exit("moddir not found")
 
-    print("epochs: {0}".format(args.moddir))
+    print("epochs: {0}".format(args.epochs))
