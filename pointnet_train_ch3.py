@@ -41,7 +41,9 @@ params = {
     'shuffle':True,
     'output_file':'terra_model',
     'epochs':args.epochs,
-    'lr':0.001
+    'lr':0.001,
+    'channels':3,
+    'npoints':2400,
 }
 
 fn_templ='/content/models/model_pointnet_terra_curve_ch{0}_ep{1}_acc{2}'
@@ -70,3 +72,47 @@ if __name__ == '__main__':
                                                    shuffle=params['shuffle'], num_workers=params['num_workers'])
     test_dataloader = torch.utils.data.DataLoader(test_dataset, batch_size=params['batch_size'],
                                                   shuffle=params['shuffle'], num_workers=params['num_workers'])
+    classifier = PointNetDenseCls(channels=params['channels'], num_classes=num_classes)
+    optimizer = optim.Adam(classifier.parameters(), lr=params['lr'], betas=(0.9, 0.999))
+    scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
+    classifier.to(device)
+
+    num_batch = len(train_dataset) / params['batch_size']
+
+    for epoch in range(params['epochs']):
+        acc = 0
+        for i, data in enumerate(train_dataloader):
+            points, target = data
+            points = points.transpose(2, 1)
+            points, target = points.to(device), target.to(device)
+            optimizer.zero_grad()
+            classifier = classifier.train()
+            pred, trans, trans_feat = classifier(points)
+            pred = pred.view(-1, num_classes)
+            target = target.view(-1, 1)[:, 0]
+            loss = F.nll_loss(pred, target)
+            # if opt.feature_transform:
+            #     loss += feature_transform_regularizer(trans_feat) * 0.001
+            loss.backward()
+            optimizer.step()
+            pred_choice = pred.data.max(1)[1]
+            correct = pred_choice.eq(target.data).cpu().sum()
+            print('[%d: %d/%d] train loss: %f accuracy: %f' % (
+            epoch, i, num_batch, loss.item(), correct.item() / float(params['batch_size'] * params['npoints'])))
+
+            if i % 10 == 0:
+                j, data = next(enumerate(test_dataloader, 0))
+                points, target = data
+                points = points.transpose(2, 1)
+                points, target = points.to(device), target.to(device)
+                classifier = classifier.eval()
+                pred, _, _ = classifier(points)
+                pred = pred.view(-1, num_classes)
+                target = target.view(-1, 1)[:, 0]
+                loss = F.nll_loss(pred, target)
+                pred_choice = pred.data.max(1)[1]
+                correct = pred_choice.eq(target.data).cpu().sum()
+                acc = correct.item() / float(params['batch_size'] * params['npoints'])
+                print('[%d: %d/%d] loss: %f accuracy: %f' % (epoch, i, num_batch, loss.item(), acc))
+        scheduler.step()
+        torch.save(classifier.state_dict(), fn_templ.format(3, str(epoch).zfill(3), round(acc, 2)))
