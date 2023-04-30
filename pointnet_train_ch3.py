@@ -56,8 +56,8 @@ if __name__ == '__main__':
 
     if not os.path.isdir(args.moddir):
         sys.exit("moddir not found")
-    if not os.path.isdir(args.dsdir):
-        sys.exit("dsdir not found")
+    # if not os.path.isdir(args.dsdir):
+    #     sys.exit("dsdir not found")
 
     print("gridsize: {0}".format(args.gridsize))
     print("device: {0}".format(args.device))
