@@ -23,7 +23,11 @@ from pointnet import PointNetDenseCls
 from pcvis import pcshow_xyz,pcshow_xyzl,pcshow_xyzrgb
 from utils import preprocess,pointcloud_pointnet_seg_real,pointcloud_pointnet_seg
 from terra import Terra,TerraRGB
+import argparse
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--device', type=str, default='cuda', help='current device [default=cuda]')
+args = parser.parse_args()
 
 if __name__ == '__main__':
-    print("hello")
+    print(args.device)
