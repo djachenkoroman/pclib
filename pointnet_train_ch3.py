@@ -46,7 +46,7 @@ params = {
     'npoints':2400,
 }
 
-fn_templ='/content/models/model_pointnet_terra_curve_ch{0}_ep{1}_acc{2}'
+fn_templ='/content/models/model_pointnet_ch{0}_ep{1}_acc{2}'
 
 if __name__ == '__main__':
     print("dataset file: {0}".format(args.dsfile))
