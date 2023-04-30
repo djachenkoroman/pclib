@@ -26,4 +26,4 @@ from terra import Terra,TerraRGB
 
 
 if __name__ == '__main__':
-    pass
+    print("hello")
