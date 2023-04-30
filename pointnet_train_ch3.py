@@ -75,7 +75,7 @@ if __name__ == '__main__':
     classifier = PointNetDenseCls(channels=params['channels'], num_classes=num_classes)
     optimizer = optim.Adam(classifier.parameters(), lr=params['lr'], betas=(0.9, 0.999))
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
-    classifier.to(device)
+    classifier.to(args.device)
 
     num_batch = len(train_dataset) / params['batch_size']
 
@@ -84,7 +84,7 @@ if __name__ == '__main__':
         for i, data in enumerate(train_dataloader):
             points, target = data
             points = points.transpose(2, 1)
-            points, target = points.to(device), target.to(device)
+            points, target = points.to(args.device), target.to(args.device)
             optimizer.zero_grad()
             classifier = classifier.train()
             pred, trans, trans_feat = classifier(points)
@@ -104,7 +104,7 @@ if __name__ == '__main__':
                 j, data = next(enumerate(test_dataloader, 0))
                 points, target = data
                 points = points.transpose(2, 1)
-                points, target = points.to(device), target.to(device)
+                points, target = points.to(args.device), target.to(args.device)
                 classifier = classifier.eval()
                 pred, _, _ = classifier(points)
                 pred = pred.view(-1, num_classes)
