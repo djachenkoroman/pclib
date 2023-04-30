@@ -27,7 +27,13 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--device', type=str, default='cuda', help='current device [default=cuda]')
+parser.add_argument('--moddir', type=str, default='', help='models directory [default=cuda]')
+
 args = parser.parse_args()
 
 if __name__ == '__main__':
     print(args.device)
+    print(args.moddir)
+
+    if not os.path.isdir(args.moddir):
+        sys.exit("moddir not found")
