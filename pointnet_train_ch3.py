@@ -63,4 +63,4 @@ if __name__ == '__main__':
     print("device: {0}".format(args.device))
     print("epochs: {0}".format(args.epochs))
 
-    num_classes, classes = preprocess(args.dsfile, args.dsdir, args.gridsize)
+    num_classes, classes = preprocess(os.path.join(args.dsfile), os.path.join(args.dsdir), args.gridsize)
