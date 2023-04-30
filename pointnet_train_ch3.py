@@ -28,6 +28,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--device', type=str, default='cuda', help='current device [default=cuda]')
 parser.add_argument('--moddir', type=str, default='', help='models directory [default=null]')
+parser.add_argument('--dsdir', type=str, default='', help='dataset directory [default=null]')
 parser.add_argument('--epochs', type=int, default=10, help='epochs [default=10]')
 
 args = parser.parse_args()
@@ -41,12 +42,16 @@ params = {
     'lr':0.001
 }
 
+fn_templ='/content/models/model_pointnet_terra_curve_ch{0}_ep{1}_acc{2}'
 
 if __name__ == '__main__':
     print("device: {0}".format(args.device))
     print("models directory: {0}".format(args.moddir))
+    print("dataset directory: {0}".format(args.dsdir))
 
     if not os.path.isdir(args.moddir):
         sys.exit("moddir not found")
+    if not os.path.isdir(args.dsdir):
+        sys.exit("dsdir not found")
 
     print("epochs: {0}".format(args.epochs))
