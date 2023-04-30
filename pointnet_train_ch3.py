@@ -26,10 +26,11 @@ from terra import Terra,TerraRGB
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--device', type=str, default='cuda', help='current device [default=cuda]')
+parser.add_argument('--dsfile', type=str, default='', help='dataset file [default=null]')
 parser.add_argument('--moddir', type=str, default='', help='models directory [default=null]')
 parser.add_argument('--dsdir', type=str, default='', help='dataset directory [default=null]')
 parser.add_argument('--gridsize', type=int, default=50, help='gridsize [default=50]')
+parser.add_argument('--device', type=str, default='cuda', help='current device [default=cuda]')
 parser.add_argument('--epochs', type=int, default=10, help='epochs [default=10]')
 
 args = parser.parse_args()
@@ -46,7 +47,10 @@ params = {
 fn_templ='/content/models/model_pointnet_terra_curve_ch{0}_ep{1}_acc{2}'
 
 if __name__ == '__main__':
-    print("device: {0}".format(args.device))
+    print("dataset file: {0}".format(args.dsfile))
+    if not os.path.isdir(args.moddir):
+        sys.exit("dsfile not found")
+
     print("models directory: {0}".format(args.moddir))
     print("dataset directory: {0}".format(args.dsdir))
 
@@ -56,4 +60,5 @@ if __name__ == '__main__':
         sys.exit("dsdir not found")
 
     print("gridsize: {0}".format(args.gridsize))
+    print("device: {0}".format(args.device))
     print("epochs: {0}".format(args.epochs))
