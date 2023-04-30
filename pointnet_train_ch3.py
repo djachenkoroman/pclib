@@ -25,5 +25,5 @@ from utils import preprocess,pointcloud_pointnet_seg_real,pointcloud_pointnet_se
 from terra import Terra,TerraRGB
 
 
-if __name__ == __main__:
+if __name__ == '__main__':
     pass
