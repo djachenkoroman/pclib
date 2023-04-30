@@ -62,3 +62,5 @@ if __name__ == '__main__':
     print("gridsize: {0}".format(args.gridsize))
     print("device: {0}".format(args.device))
     print("epochs: {0}".format(args.epochs))
+
+    num_classes, classes = preprocess(args.dsfile, args.dsdir, args.gridsize)
