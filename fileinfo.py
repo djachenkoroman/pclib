@@ -12,6 +12,10 @@ args = parser.parse_args()
 
 if __name__ == '__main__':
     tprint("fileinfo")
+
+    print("Example")
+    print("--------------------------------------")
+
     # получим объект файла
     file1 = open(args.dsfile, "r")
 
@@ -26,3 +30,4 @@ if __name__ == '__main__':
 
     # закрываем файл
     file1.close
+    print("--------------------------------------")
