@@ -29,6 +29,7 @@ parser.add_argument('--dsfile', type=str, default='', help='dataset file [defaul
 parser.add_argument('--moddir', type=str, default='', help='models directory [default=null]')
 parser.add_argument('--dsdir', type=str, default='', help='dataset directory [default=null]')
 parser.add_argument('--gridsize', type=int, default=50, help='gridsize [default=50]')
+parser.add_argument('--npoints', type=int, default=2400, help='npoints [default=2400]')
 parser.add_argument('--channels', type=int, default=3, help='channels [default=3]')
 parser.add_argument('--device', type=str, default='cuda', help='current device [default=cuda]')
 parser.add_argument('--epochs', type=int, default=10, help='epochs [default=10]')
@@ -39,10 +40,9 @@ params = {
     'batch_size':4,
     'num_workers':1,
     'shuffle':True,
-    'output_file':'terra_model',
     'epochs':args.epochs,
     'lr':0.001,
-    'npoints':2400,
+    'npoints':args.npoints,
 }
 
 fn_templ='/content/models/model_pointnet_ch{0}_ep{1}_acc{2}'
@@ -65,7 +65,7 @@ if __name__ == '__main__':
     print("channels: {0}".format(args.channels))
     print("device: {0}".format(args.device))
     print("epochs: {0}".format(args.epochs))
-    print("npoints: {0}".format(params['epochs']))
+    print("npoints: {0}".format(params['npoints']))
 
     num_classes, classes = preprocess(os.path.join(args.dsfile), os.path.join(args.dsdir), args.gridsize)
     if args.channels==3:
