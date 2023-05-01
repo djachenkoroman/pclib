@@ -68,8 +68,10 @@ if __name__ == '__main__':
     print("npoints: {0}".format(params['epochs']))
 
     num_classes, classes = preprocess(os.path.join(args.dsfile), os.path.join(args.dsdir), args.gridsize)
-    train_dataset = Terra(args.dsdir, data_augmentation=True)
-    test_dataset = Terra(args.dsdir, split='test')
+    if args.channels==3:
+        train_dataset = Terra(args.dsdir, data_augmentation=True)
+        test_dataset = Terra(args.dsdir, split='test')
+
     train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=params['batch_size'],
                                                    shuffle=params['shuffle'], num_workers=params['num_workers'])
     test_dataloader = torch.utils.data.DataLoader(test_dataset, batch_size=params['batch_size'],
