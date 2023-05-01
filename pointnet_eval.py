@@ -135,5 +135,5 @@ if __name__ == '__main__':
         output.append(out)
     fn="output.txt"
     output = np.vstack(output)
-    print(output.shape)
+    print(f'output.shape: {output.shape}')
     np.savetxt(fn,output,delimiter=',', fmt = fmt)
