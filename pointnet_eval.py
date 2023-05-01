@@ -101,6 +101,11 @@ if __name__ == '__main__':
             idx += 1
     del data
 
+    model = PointNetDenseCls(channels=args.channels, num_classes=args.num_classes)
+    model.load_state_dict(torch.load(args.modfile, map_location=torch.device(args.device)))
+    model.to(args.device)
+    model.eval()
+
     d = Path(data_dir)
     output=[]
     fmt = '%1.6f', '%1.6f', '%1.6f','%d'
@@ -118,7 +123,7 @@ if __name__ == '__main__':
             arr = np.hstack([coord]).astype(np.float32)
         else:
             sys.exit("wrong number of channels")
-        arr = torch.FloatTensor(arr).to(device)
+        arr = torch.FloatTensor(arr).to(args.device)
         arr = torch.unsqueeze(arr, dim=0)
         arr = arr.transpose(2, 1)
         pred_tuple = model(arr)
