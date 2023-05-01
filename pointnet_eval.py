@@ -87,3 +87,15 @@ if __name__ == '__main__':
     del y
 
     print(f'x_max: {x_max}\nx_min: {x_min}\ny_max: {y_max}\nx_min: {y_min}')
+
+    for i in range(x_min, x_max - grid_size, grid_size):
+        for j in range(y_min, y_max - grid_size, grid_size):
+            arr = data[
+                (data[:, 0] > i) & (data[:, 0] < i + grid_size) & (data[:, 1] > j) & (data[:, 1] < j + grid_size)]
+            fn='{0}/{1}.txt'.format(data_dir,str(idx).zfill(5))
+            if dbg: print(fn)
+            choice = np.random.choice(len(arr), npoints, replace=True)
+            arr=arr[choice,:]
+            np.savetxt(fn,arr,delimiter=',',fmt=fmt)
+            idx += 1
+    del data
