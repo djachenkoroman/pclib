@@ -68,7 +68,7 @@ if __name__ == '__main__':
 
     data = np.loadtxt(args.dsfile)
     print(f'file {args.dsfile} downloaded')
-    data = data[:,:channels]
+    data = data[:,:args.channels]
     if args.channels==3:
         fmt = '%1.6f', '%1.6f', '%1.6f'
     elif args.channels==6:
