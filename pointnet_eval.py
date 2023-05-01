@@ -74,7 +74,7 @@ if __name__ == '__main__':
     elif args.channels==6:
         fmt = '%1.6f', '%1.6f', '%1.6f', '%d', '%d', '%d'
     else:
-        sys.exit("error")
+        sys.exit("wrong number of channels")
 
     idx = 0
     x = data[:, 0]
@@ -85,3 +85,5 @@ if __name__ == '__main__':
     y_min = int(np.min(y)) - 1
     del x
     del y
+
+    print(f'x_max: {x_max}\nx_min: {x_min}\ny_max: {y_max}\nx_min: {y_min}')
