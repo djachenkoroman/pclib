@@ -75,3 +75,13 @@ if __name__ == '__main__':
         fmt = '%1.6f', '%1.6f', '%1.6f', '%d', '%d', '%d'
     else:
         sys.exit("error")
+
+    idx = 0
+    x = data[:, 0]
+    y = data[:, 1]
+    x_max = int(np.max(x)) + 1
+    x_min = int(np.min(x)) - 1
+    y_max = int(np.max(y)) + 1
+    y_min = int(np.min(y)) - 1
+    del x
+    del y
