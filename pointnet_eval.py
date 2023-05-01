@@ -65,3 +65,13 @@ if __name__ == '__main__':
     data_dir=os.path.join(current_dir,rand_string)
     os.makedirs(data_dir, exist_ok=False)
     print(f'data dir: {data_dir}')
+
+    data = np.loadtxt(args.dsfile)
+    print(f'file {args.dsfile} downloaded')
+    data = data[:,:channels]
+    if args.channels==3:
+        fmt = '%1.6f', '%1.6f', '%1.6f'
+    elif args.channels==6:
+        fmt = '%1.6f', '%1.6f', '%1.6f', '%d', '%d', '%d'
+    else:
+        sys.exit("error")
