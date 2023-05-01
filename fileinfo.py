@@ -12,7 +12,7 @@ args = parser.parse_args()
 
 if __name__ == '__main__':
     tprint("fileinfo")
-    data = np.loadtxt(args.dsfile, delimiter=',')
+    data = np.loadtxt(args.dsfile, delimiter=' ')
     print("columns: {0}\nrows: {1}".format(data.shape[1],data.shape[0]))
 
 
