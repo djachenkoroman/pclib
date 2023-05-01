@@ -7,6 +7,7 @@ from art import *
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dsfile', type=str, default='', help='dataset file [default=null]')
+parser.add_argument('--delimiter', type=str, default=' ', help='delimiter [default=space]')
 
 args = parser.parse_args()
 
