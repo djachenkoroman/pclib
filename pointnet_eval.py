@@ -23,6 +23,8 @@ from terra import Terra,TerraRGB
 from pointnet import PointNetDenseCls
 import argparse
 from art import *
+import random
+import string
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dsfile', type=str, default='', help='dataset file [default=null]')
@@ -58,3 +60,8 @@ if __name__ == '__main__':
 
     current_dir=os.getcwd()
     print(f'current dir: {current_dir}')
+
+    rand_string = ''.join(random.choice(string.ascii_lowercase) for i in range(8))
+    data_dir=os.path.join(current_dir,rand_string)
+    os.makedirs(data_dir, exist_ok=False)
+    print(f'data dir: {data_dir}')
