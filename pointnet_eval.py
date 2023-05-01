@@ -56,4 +56,5 @@ if __name__ == '__main__':
 
     print(msg_tmpl.format(args.dsfile,args.modfile,args.gridsize,args.npoints,args.num_classes,args.channels,args.device))
 
-
+    current_dir=os.getcwd()
+    print(current_dir)
