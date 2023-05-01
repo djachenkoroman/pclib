@@ -10,7 +10,6 @@ import torch.nn.parallel
 import torch.utils.data
 from torch.autograd import Variable
 import torch.nn.functional as F
-import os
 import pickle
 import logging
 from tqdm import tqdm
