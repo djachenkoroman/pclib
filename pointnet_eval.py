@@ -47,5 +47,5 @@ device: {6}
 
 if __name__ == '__main__':
     tprint("pointnet evaluate")
-    print(msg_tmpl.format(args))
+    print(msg_tmpl.format(args.dsfile,args.modfile,args.gridsize,args.npoints,args.num_classes,args.channels,args.device,))
 
