@@ -87,6 +87,8 @@ if __name__ == '__main__':
     del y
 
     print(f'x_max: {x_max}\nx_min: {x_min}\ny_max: {y_max}\nx_min: {y_min}')
+    grid_size=args.gridsize
+    npoints=args.npoints
 
     for i in range(x_min, x_max - grid_size, grid_size):
         for j in range(y_min, y_max - grid_size, grid_size):
