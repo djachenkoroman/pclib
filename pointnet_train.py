@@ -15,7 +15,6 @@ import logging
 from tqdm import tqdm
 from torch.utils.data import Dataset
 import torch.optim as optim
-import os
 import pandas as pd
 import torch
 from pointnet import PointNetDenseCls
