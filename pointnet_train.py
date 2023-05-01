@@ -23,6 +23,7 @@ from pcvis import pcshow_xyz,pcshow_xyzl,pcshow_xyzrgb
 from utils import preprocess,pointcloud_pointnet_seg_real,pointcloud_pointnet_seg
 from terra import Terra,TerraRGB
 import argparse
+from art import *
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dsfile', type=str, default='', help='dataset file [default=null]')
@@ -48,6 +49,7 @@ params = {
 fn_templ='/content/models/model_pointnet_ch{0}_ep{1}_acc{2}'
 
 if __name__ == '__main__':
+    tprint("pointnet train")
     print("dataset file: {0}".format(args.dsfile))
     if not os.path.isfile(args.dsfile):
         sys.exit("dsfile not found")
