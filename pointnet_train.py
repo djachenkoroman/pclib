@@ -119,4 +119,4 @@ if __name__ == '__main__':
                 acc = correct.item() / float(params['batch_size'] * params['npoints'])
                 print('[%d: %d/%d] loss: %f accuracy: %f' % (epoch, i, num_batch, loss.item(), acc))
         scheduler.step()
-        torch.save(classifier.state_dict(), fn_templ.format(3, str(epoch).zfill(3), round(acc, 2)))
+        torch.save(classifier.state_dict(), fn_templ.format(args.channels, str(epoch).zfill(3), round(acc, 2)))
