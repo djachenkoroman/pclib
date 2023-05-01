@@ -95,7 +95,6 @@ if __name__ == '__main__':
             arr = data[
                 (data[:, 0] > i) & (data[:, 0] < i + grid_size) & (data[:, 1] > j) & (data[:, 1] < j + grid_size)]
             fn='{0}/{1}.txt'.format(data_dir,str(idx).zfill(5))
-            if dbg: print(fn)
             choice = np.random.choice(len(arr), npoints, replace=True)
             arr=arr[choice,:]
             np.savetxt(fn,arr,delimiter=',',fmt=fmt)
