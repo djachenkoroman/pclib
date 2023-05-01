@@ -36,8 +36,8 @@ parser.add_argument('--device', type=str, default='cpu', help='current device [d
 args = parser.parse_args()
 
 msg_tmpl='''
-dsfile: {0}
-modfile: {1}
+dsfile: {0} (exists !!!)
+modfile: {1} (exists !!!)
 gridsize: {2}
 npoints: {3}
 num_classes: {4}
