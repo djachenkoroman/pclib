@@ -35,5 +35,17 @@ parser.add_argument('--device', type=str, default='cpu', help='current device [d
 
 args = parser.parse_args()
 
+msg_tmpl='''
+dsfile: {0}
+modfile: {1}
+gridsize: {2}
+npoints: {3}
+num_classes: {4}
+channels: {5}
+device: {6}
+'''
+
 if __name__ == '__main__':
     tprint("pointnet evaluate")
+    print(msg_tmpl.format(args))
+
