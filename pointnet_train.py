@@ -72,6 +72,12 @@ if __name__ == '__main__':
     if args.channels==3:
         train_dataset = Terra(args.dsdir, data_augmentation=True)
         test_dataset = Terra(args.dsdir, split='test')
+    elif args.channels==6:
+        train_dataset = TerraRGB(args.dsdir, data_augmentation=True)
+        test_dataset = TerraRGB(args.dsdir, split='test')
+    else:
+        sys.exit("incorrect channel value")
+
 
     train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=params['batch_size'],
                                                    shuffle=params['shuffle'], num_workers=params['num_workers'])
