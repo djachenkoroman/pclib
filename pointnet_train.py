@@ -30,6 +30,7 @@ parser.add_argument('--dsfile', type=str, default='', help='dataset file [defaul
 parser.add_argument('--moddir', type=str, default='', help='models directory [default=null]')
 parser.add_argument('--dsdir', type=str, default='', help='dataset directory [default=null]')
 parser.add_argument('--gridsize', type=int, default=50, help='gridsize [default=50]')
+parser.add_argument('--channels', type=int, default=3, help='channels [default=3]')
 parser.add_argument('--device', type=str, default='cuda', help='current device [default=cuda]')
 parser.add_argument('--epochs', type=int, default=10, help='epochs [default=10]')
 
@@ -42,7 +43,6 @@ params = {
     'output_file':'terra_model',
     'epochs':args.epochs,
     'lr':0.001,
-    'channels':3,
     'npoints':2400,
 }
 
@@ -62,8 +62,10 @@ if __name__ == '__main__':
     #     sys.exit("dsdir not found")
 
     print("gridsize: {0}".format(args.gridsize))
+    print("channels: {0}".format(args.channels))
     print("device: {0}".format(args.device))
     print("epochs: {0}".format(args.epochs))
+    print("npoints: {0}".format(params['epochs']))
 
     num_classes, classes = preprocess(os.path.join(args.dsfile), os.path.join(args.dsdir), args.gridsize)
     train_dataset = Terra(args.dsdir, data_augmentation=True)
@@ -72,7 +74,7 @@ if __name__ == '__main__':
                                                    shuffle=params['shuffle'], num_workers=params['num_workers'])
     test_dataloader = torch.utils.data.DataLoader(test_dataset, batch_size=params['batch_size'],
                                                   shuffle=params['shuffle'], num_workers=params['num_workers'])
-    classifier = PointNetDenseCls(channels=params['channels'], num_classes=num_classes)
+    classifier = PointNetDenseCls(channels=args.channels, num_classes=num_classes)
     optimizer = optim.Adam(classifier.parameters(), lr=params['lr'], betas=(0.9, 0.999))
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=20, gamma=0.5)
     classifier.to(args.device)
