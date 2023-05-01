@@ -29,6 +29,7 @@ parser.add_argument('--dsfile', type=str, default='', help='dataset file [defaul
 parser.add_argument('--modfile', type=str, default='', help='models directory [default=null]')
 parser.add_argument('--gridsize', type=int, default=50, help='gridsize [default=50]')
 parser.add_argument('--npoints', type=int, default=2400, help='npoints [default=2400]')
+parser.add_argument('--num_classes', type=int, default=5, help='num_classes [default=5]')
 parser.add_argument('--channels', type=int, default=3, help='channels [default=3]')
 parser.add_argument('--device', type=str, default='cpu', help='current device [default=cuda]')
 
