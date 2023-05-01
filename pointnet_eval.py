@@ -47,5 +47,13 @@ device: {6}
 
 if __name__ == '__main__':
     tprint("pointnet evaluate")
-    print(msg_tmpl.format(args.dsfile,args.modfile,args.gridsize,args.npoints,args.num_classes,args.channels,args.device,))
+
+    if not os.path.isfile(args.dsfile):
+        sys.exit("dsfile not found")
+
+    if not os.path.isfile(args.modfile):
+        sys.exit("modfile not found")
+
+    print(msg_tmpl.format(args.dsfile,args.modfile,args.gridsize,args.npoints,args.num_classes,args.channels,args.device))
+
 
