@@ -100,3 +100,34 @@ if __name__ == '__main__':
             np.savetxt(fn,arr,delimiter=',',fmt=fmt)
             idx += 1
     del data
+
+    d = Path(data_dir)
+    output=[]
+    fmt = '%1.6f', '%1.6f', '%1.6f','%d'
+
+    for f in d.files("*.*"):
+        data = np.loadtxt(f,delimiter=',')
+        coord = data[:,:3]
+        rgb = data[:, 3:6]
+        coord = coord - np.expand_dims(np.mean(coord, axis=0), 0)  # center
+        dist = np.max(np.sqrt(np.sum(coord ** 2, axis=1)), 0)
+        coord = coord / dist  # scale
+        if args.channels==6:
+            arr = np.hstack([coord, rgb]).astype(np.float32)
+        elif args.channels==3:
+            arr = np.hstack([coord]).astype(np.float32)
+        else:
+            sys.exit("wrong number of channels")
+        arr = torch.FloatTensor(arr).to(device)
+        arr = torch.unsqueeze(arr, dim=0)
+        arr = arr.transpose(2, 1)
+        pred_tuple = model(arr)
+        pred, _, _ = pred_tuple
+        pred_choice = pred.data.max(2)[1]
+        pred = pred_choice.data.cpu().numpy()
+        out=np.hstack([data[:,:3], pred.T])
+        output.append(out)
+    fn="output.txt"
+    output = np.vstack(output)
+    print(output.shape)
+    np.savetxt(fn,output,delimiter=',', fmt = fmt)
