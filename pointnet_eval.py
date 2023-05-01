@@ -111,6 +111,7 @@ if __name__ == '__main__':
     fmt = '%1.6f', '%1.6f', '%1.6f','%d'
 
     for f in tqdm(d.files("*.*"),ncols=80):
+        tqdm.write(f)
         data = np.loadtxt(f,delimiter=',')
         coord = data[:,:3]
         rgb = data[:, 3:6]
