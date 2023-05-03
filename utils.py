@@ -24,9 +24,10 @@ def preprocess(data_root, data_dir, GRID_SIZE):
     del y
 
     rng1=range(x_min, x_max - GRID_SIZE, GRID_SIZE)
-    rng2=(y_min, y_max - GRID_SIZE, GRID_SIZE)
-    rng3=(0,len(rng1)*len(rng2))
-
+    rng2=range(y_min, y_max - GRID_SIZE, GRID_SIZE)
+    rng3=(len(rng1)*len(rng2))
+    # print(rng3)
+    # print("{0}\n{1}\n{2}".format(len(rng1),len(rng2),len(rng1)*len(rng2)))
     bar = IncrementalBar('Countdown', max=len(rng3))
 
     for i in range(x_min, x_max - GRID_SIZE, GRID_SIZE):
