@@ -141,6 +141,9 @@ if __name__ == '__main__':
     ## benchmark mIOU
     shape_ious = []
     predictions = []
+
+    tprint("test")
+
     for i,data in tqdm(enumerate(test_dataloader, 0)):
         points, target = data
         points = points.transpose(2, 1)
