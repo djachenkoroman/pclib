@@ -8,6 +8,8 @@ from pointnet import PointNetDenseCls
 # from tqdm import tqdm
 from progress.bar import IncrementalBar
 
+
+
 def preprocess(data_root, data_dir, GRID_SIZE):
     os.makedirs(data_dir, exist_ok=False)
     data = np.loadtxt(data_root)

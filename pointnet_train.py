@@ -23,6 +23,7 @@ from utils import preprocess,pointcloud_pointnet_seg_real,pointcloud_pointnet_se
 from terra import Terra,TerraRGB
 import argparse
 from art import *
+import datetime
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dsfile', type=str, default='', help='dataset file [default=null]')
@@ -46,10 +47,15 @@ params = {
 }
 
 # fn_templ='/content/models/model_pointnet_ch{0}_np{1}_gs{2}_ep{3}_{4}_acc{5}'
-fn_templ='/content/models/model_pointnet_ch{0}_gs{1}_nc{2}_np{3}_ep{4}({5})_acc{6}'
+fn_templ='/content/models/model_{0}_pointnet_ch{1}_gs{2}_nc{3}_np{4}_ep{5}({6})_acc{7}'
 
 if __name__ == '__main__':
     tprint("pointnet train")
+
+    date_time = datetime.datetime.now()
+    dt="{0}{1}{3}{4}{5}".format(date_time.year,date_time.month,date_time.day,date_time.hour,date_time.minute)
+    print(dt)
+
     print("dataset file: {0}".format(args.dsfile))
     if not os.path.isfile(args.dsfile):
         sys.exit("dsfile not found")
@@ -129,4 +135,4 @@ if __name__ == '__main__':
         # fn_templ = '/content/models/model_pointnet_ch{0}_np{1}_gs{2}_ep{3}_{4}_acc{5}'
         # fn_templ = '/content/models/model_pointnet_ch{0}_gs{1}_nc{2}_np{3}_ep{4}_{5}_acc{6}'
 
-        torch.save(classifier.state_dict(), fn_templ.format(args.channels,args.gridsize,num_classes,args.npoints,str(epoch).zfill(4),args.epochs, round(acc, 4)))
+        torch.save(classifier.state_dict(), fn_templ.format(dt,args.channels,args.gridsize,num_classes,args.npoints,str(epoch).zfill(4),args.epochs, round(acc, 4)))
