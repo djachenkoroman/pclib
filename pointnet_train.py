@@ -45,7 +45,7 @@ params = {
     'npoints':args.npoints,
 }
 
-fn_templ='/content/models/model_pointnet_ch{0}_ep{1}_acc{2}'
+fn_templ='/content/models/model_pointnet_ch{0}_np{1}_gs{2}_ep{3}_{4}_acc{5}'
 
 if __name__ == '__main__':
     tprint("pointnet train")
@@ -125,4 +125,6 @@ if __name__ == '__main__':
                 acc = correct.item() / float(params['batch_size'] * params['npoints'])
                 print('[%d: %d/%d] loss: %f accuracy: %f' % (epoch, i, num_batch, loss.item(), acc))
         scheduler.step()
-        torch.save(classifier.state_dict(), fn_templ.format(args.channels, str(epoch).zfill(3), round(acc, 2)))
+        # fn_templ = '/content/models/model_pointnet_ch{0}_np{1}_gs{2}_ep{3}_{4}_acc{5}'
+
+        torch.save(classifier.state_dict(), fn_templ.format(args.channels,args.npoints,args.gridsize, str(epoch).zfill(3),args.epochs, round(acc, 2)))
