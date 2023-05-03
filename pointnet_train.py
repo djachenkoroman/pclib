@@ -137,3 +137,21 @@ if __name__ == '__main__':
         # fn_templ = '/content/models/model_pointnet_ch{0}_gs{1}_nc{2}_np{3}_ep{4}_{5}_acc{6}'
 
         torch.save(classifier.state_dict(), fn_templ.format(dt,args.channels,args.gridsize,num_classes,args.npoints,str(epoch).zfill(4),args.epochs, round(acc, 4)))
+
+    ## benchmark mIOU
+    shape_ious = []
+    predictions = []
+    for i,data in tqdm(enumerate(test_dataloader, 0)):
+        points, target = data
+        points = points.transpose(2, 1)
+        points, target = points.to(device), target.to(device)
+        classifier = classifier.eval()
+        pred, _, _ = classifier(points)
+        pred_choice = pred.data.max(2)[1]
+        correct = pred_choice.eq(target.data).cpu().sum()
+        accuracy=correct.item()/float(params["batch_size"] * ds_params['npoints'])
+        print(f'loss: {loss.item()} accuracy: { accuracy }')
+
+        pred_np = pred_choice.cpu().data.numpy()
+        target_np = target.cpu().data.numpy()
+        predictions.append((points, pred_np, target_np))
