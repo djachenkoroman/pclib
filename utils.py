@@ -5,6 +5,7 @@ import torch.nn.parallel
 import torch.utils.data
 import numpy as np
 from pointnet import PointNetDenseCls
+from tqdm import tqdm
 
 
 def preprocess(data_root, data_dir, GRID_SIZE):
@@ -21,6 +22,10 @@ def preprocess(data_root, data_dir, GRID_SIZE):
     y_min = int(np.min(y)) - 1
     del x
     del y
+
+    rng1=range(x_min, x_max - GRID_SIZE, GRID_SIZE)
+    rng2=(y_min, y_max - GRID_SIZE, GRID_SIZE)
+    print("{0}\n{1}\n{2}".format(len(rng1),len(rng2),len(rng1)*len(rng2)))
 
     for i in range(x_min, x_max - GRID_SIZE, GRID_SIZE):
         for j in range(y_min, y_max - GRID_SIZE, GRID_SIZE):
