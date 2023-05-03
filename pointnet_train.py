@@ -75,6 +75,7 @@ if __name__ == '__main__':
     print("npoints: {0}".format(params['npoints']))
 
     num_classes, classes = preprocess(os.path.join(args.dsfile), os.path.join(args.dsdir), args.gridsize)
+    print("num_classes: {0}".format(num_classes))
     if args.channels==3:
         train_dataset = Terra(args.dsdir, data_augmentation=True)
         test_dataset = Terra(args.dsdir, split='test')
