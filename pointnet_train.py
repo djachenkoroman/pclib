@@ -53,7 +53,7 @@ if __name__ == '__main__':
     tprint("pointnet train")
 
     date_time = datetime.datetime.now()
-    dt="{0}{1}{3}{4}{5}".format(date_time.year,date_time.month,date_time.day,date_time.hour,date_time.minute)
+    dt="{0}{1}{2}{3}{4}".format(date_time.year,date_time.month,date_time.day,date_time.hour,date_time.minute)
     print(dt)
 
     print("dataset file: {0}".format(args.dsfile))
