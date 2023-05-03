@@ -5,8 +5,8 @@ import torch.nn.parallel
 import torch.utils.data
 import numpy as np
 from pointnet import PointNetDenseCls
-from tqdm import tqdm
-
+# from tqdm import tqdm
+from progress.bar import IncrementalBar
 
 def preprocess(data_root, data_dir, GRID_SIZE):
     os.makedirs(data_dir, exist_ok=False)
@@ -25,7 +25,9 @@ def preprocess(data_root, data_dir, GRID_SIZE):
 
     rng1=range(x_min, x_max - GRID_SIZE, GRID_SIZE)
     rng2=(y_min, y_max - GRID_SIZE, GRID_SIZE)
-    print("{0}\n{1}\n{2}".format(len(rng1),len(rng2),len(rng1)*len(rng2)))
+    rng3=(0,len(rng1)*len(rng2))
+
+    bar = IncrementalBar('Countdown', max=len(rng3))
 
     for i in range(x_min, x_max - GRID_SIZE, GRID_SIZE):
         for j in range(y_min, y_max - GRID_SIZE, GRID_SIZE):
@@ -33,7 +35,9 @@ def preprocess(data_root, data_dir, GRID_SIZE):
                 (data[:, 0] > i) & (data[:, 0] < i + GRID_SIZE) & (data[:, 1] > j) & (data[:, 1] < j + GRID_SIZE)]
             np.save(f'{data_dir}/{idx}.npy', arr)
             idx += 1
+            bar.next()
     del data
+    bar.finish()
     return num_classes, classes
 
 
