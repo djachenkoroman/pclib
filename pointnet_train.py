@@ -144,7 +144,7 @@ if __name__ == '__main__':
     for i,data in tqdm(enumerate(test_dataloader, 0)):
         points, target = data
         points = points.transpose(2, 1)
-        points, target = points.to(device), target.to(device)
+        points, target = points.to(args.device), target.to(args.device)
         classifier = classifier.eval()
         pred, _, _ = classifier(points)
         pred_choice = pred.data.max(2)[1]
