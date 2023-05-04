@@ -161,5 +161,9 @@ if __name__ == '__main__':
         target_np = target.cpu().data.numpy()
         predictions.append((points, pred_np, target_np))
 
-    print(m_accuracy)
-    print(m_loss)
+    # print(m_accuracy)
+    # print(m_loss)
+
+    with open('data.txt', 'w') as filehandle:
+        for l,c in zip(m_loss,m_accuracy):
+            filehandle.write('%s %s' % l,c)
