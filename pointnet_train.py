@@ -166,4 +166,4 @@ if __name__ == '__main__':
 
     with open('data.txt', 'w') as filehandle:
         for l,c in zip(m_loss,m_accuracy):
-            filehandle.write("{0} {1}".format(str(l),str(c)))
+            filehandle.write("{0} {1}\n".format(str(l),str(c)))
