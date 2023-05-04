@@ -96,7 +96,8 @@ if __name__ == '__main__':
     classifier.to(args.device)
 
     num_batch = len(train_dataset) / params['batch_size']
-
+    m_loss=[]
+    m_accuracy=[]
     for epoch in range(params['epochs']):
         acc = 0
         for i, data in enumerate(train_dataloader):
@@ -135,7 +136,8 @@ if __name__ == '__main__':
         scheduler.step()
         # fn_templ = '/content/models/model_pointnet_ch{0}_np{1}_gs{2}_ep{3}_{4}_acc{5}'
         # fn_templ = '/content/models/model_pointnet_ch{0}_gs{1}_nc{2}_np{3}_ep{4}_{5}_acc{6}'
-
+        m_loss.append(loss.item())
+        m_accuracy.append(acc)
         torch.save(classifier.state_dict(), fn_templ.format(dt,args.channels,args.gridsize,num_classes,args.npoints,str(epoch).zfill(4),args.epochs, round(acc, 4)))
 
     ## benchmark mIOU
@@ -158,3 +160,6 @@ if __name__ == '__main__':
         pred_np = pred_choice.cpu().data.numpy()
         target_np = target.cpu().data.numpy()
         predictions.append((points, pred_np, target_np))
+
+    print(m_accuracy)
+    print(m_loss)
