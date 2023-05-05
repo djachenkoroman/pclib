@@ -104,7 +104,7 @@ if __name__ == '__main__':
     num_batch = len(train_dataset) / params['batch_size']
     m_loss=[]
     m_accuracy=[]
-    for epoch in tqdm(range(params['epochs'])):
+    for epoch in tqdm(range(params['epochs']),ncols=100):
         acc = 0
         for i, data in enumerate(train_dataloader):
             points, target = data
