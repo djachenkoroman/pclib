@@ -24,7 +24,7 @@ from terra import Terra,TerraRGB
 import argparse
 from art import *
 import datetime
-import progress
+import logging
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dsfile', type=str, default='', help='dataset file [default=null]')
@@ -53,6 +53,7 @@ s_templ = "[{0}: {1}/{2}] train loss: {3} accuracy: {4}"
 
 if __name__ == '__main__':
     tprint("pointnet train")
+
     # Get current DIR
     maindir=os.getcwd()
     print("Current DIR: {0}".format(maindir))
@@ -62,17 +63,30 @@ if __name__ == '__main__':
     dt=dt_templ.format(date_time.year,str(date_time.month).zfill(2),str(date_time.day).zfill(2),str(date_time.hour).zfill(2),str(date_time.minute).zfill(2))
     print(dt)
 
-    print("dataset file: {0}".format(args.dsfile))
+    logging.basicConfig(level=logging.INFO, filename=os.path.join(maindir,"log_{0}.log").format(dt), filemode="w")
+
+    msg_01="dataset file: {0}".format(args.dsfile)
+    print(msg_01)
+    logging.INFO(msg_01)
+
     if not os.path.isfile(args.dsfile):
-        sys.exit("dsfile not found")
+        msg_02="dsfile not found"
+        logging.INFO(msg_02)
+        sys.exit(msg_02)
 
     moddir=os.path.join(maindir,"models_{0}".format(dt))
     os.makedirs(moddir, exist_ok=False)
-    print("models directory: {0}".format(moddir))
+
+    msg_03="models directory: {0}".format(moddir)
+    print(msg_03)
+    logging.INFOO(msg_03)
 
     dsdir=os.path.join(maindir,"dsdir_{0}".format(dt))
     os.makedirs(dsdir, exist_ok=False)
-    print("dataset directory: {0}".format(dsdir))
+
+    msg_04="dataset directory: {0}".format(dsdir)
+    print(msg_04)
+    logging.INFO(msg_04)
 
     print("gridsize: {0}".format(args.gridsize))
     print("channels: {0}".format(args.channels))
