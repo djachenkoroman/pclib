@@ -67,7 +67,7 @@ if __name__ == '__main__':
 
     msg_01="dataset file: {0}".format(args.dsfile)
     print(msg_01)
-    logging.INFO(msg_01)
+    logging.INFO(str(msg_01))
 
     if not os.path.isfile(args.dsfile):
         msg_02="dsfile not found"
