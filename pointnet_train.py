@@ -171,7 +171,8 @@ if __name__ == '__main__':
         m_loss.append(loss.item())
         m_accuracy.append(acc)
         fnm=fn_templ.format(date_id, args.channels, args.gridsize, num_classes, args.npoints, str(epoch).zfill(4), args.epochs, round(acc, 4))
-        torch.save(classifier.state_dict(), "{0}/{1}".format(moddir,fnm))
+        print("{0}/{1}".format(moddir,fnm))
+        # torch.save(classifier.state_dict(), )
 
     ## benchmark mIOU
     shape_ious = []
