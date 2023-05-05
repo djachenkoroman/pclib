@@ -11,7 +11,7 @@ from progress.bar import IncrementalBar
 
 
 def preprocess(data_root, data_dir, GRID_SIZE):
-    os.makedirs(data_dir, exist_ok=False)
+    # os.makedirs(data_dir, exist_ok=False)
     data = np.loadtxt(data_root)
     classes = set(data[:, -1])
     num_classes = len(classes)
@@ -30,7 +30,7 @@ def preprocess(data_root, data_dir, GRID_SIZE):
     rng3=range(len(rng1)*len(rng2))
     # print(rng3)
     # print("{0}\n{1}\n{2}".format(len(rng1),len(rng2),len(rng1)*len(rng2)))
-    bar = IncrementalBar('preprocess:', max=len(rng3))
+    bar = IncrementalBar('preprocess', max=len(rng3))
 
     for i in range(x_min, x_max - GRID_SIZE, GRID_SIZE):
         for j in range(y_min, y_max - GRID_SIZE, GRID_SIZE):

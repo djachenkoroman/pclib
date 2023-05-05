@@ -27,8 +27,8 @@ import datetime
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dsfile', type=str, default='', help='dataset file [default=null]')
-parser.add_argument('--moddir', type=str, default='', help='models directory [default=null]')
-parser.add_argument('--dsdir', type=str, default='', help='dataset directory [default=null]')
+# parser.add_argument('--moddir', type=str, default='', help='models directory [default=null]')
+# parser.add_argument('--dsdir', type=str, default='', help='dataset directory [default=null]')
 parser.add_argument('--gridsize', type=int, default=50, help='gridsize [default=50]')
 parser.add_argument('--npoints', type=int, default=2400, help='npoints [default=2400]')
 parser.add_argument('--channels', type=int, default=3, help='channels [default=3]')
@@ -46,27 +46,31 @@ params = {
     'npoints':args.npoints,
 }
 
-# fn_templ='/content/models/model_pointnet_ch{0}_np{1}_gs{2}_ep{3}_{4}_acc{5}'
-fn_templ='/content/models/model_{0}_pointnet_ch{1}_gs{2}_nc{3}_np{4}_ep{5}({6})_acc{7}'
+fn_templ='model_{0}_pointnet_ch{1}_gs{2}_nc{3}_np{4}_ep{5}({6})_acc{7}'
+dt_templ="{0}{1}{2}{3}{4}"
 
 if __name__ == '__main__':
     tprint("pointnet train")
+    # Get current DIR
+    maindir=os.getcwd()
+    print("Current DIR: {0}".format(maindir))
 
+    # Get DATE and TIME
     date_time = datetime.datetime.now()
-    dt="{0}{1}{2}{3}{4}".format(date_time.year,str(date_time.month).zfill(2),str(date_time.day).zfill(2),str(date_time.hour).zfill(2),str(date_time.minute).zfill(2))
+    dt=dt_templ.format(date_time.year,str(date_time.month).zfill(2),str(date_time.day).zfill(2),str(date_time.hour).zfill(2),str(date_time.minute).zfill(2))
     print(dt)
 
     print("dataset file: {0}".format(args.dsfile))
     if not os.path.isfile(args.dsfile):
         sys.exit("dsfile not found")
 
-    print("models directory: {0}".format(args.moddir))
-    print("dataset directory: {0}".format(args.dsdir))
+    moddir=os.path.join(maindir,"models_{0}".format(dt))
+    os.makedirs(moddir, exist_ok=False)
+    print("models directory: {0}".format(moddir))
 
-    if not os.path.isdir(args.moddir):
-        sys.exit("moddir not found")
-    # if not os.path.isdir(args.dsdir):
-    #     sys.exit("dsdir not found")
+    dsdir=os.path.join(maindir,"dsdir_{0}".format(dt))
+    os.makedirs(dsdir, exist_ok=False)
+    print("dataset directory: {0}".format(dsdir))
 
     print("gridsize: {0}".format(args.gridsize))
     print("channels: {0}".format(args.channels))
@@ -74,14 +78,14 @@ if __name__ == '__main__':
     print("epochs: {0}".format(args.epochs))
     print("npoints: {0}".format(params['npoints']))
 
-    num_classes, classes = preprocess(os.path.join(args.dsfile), os.path.join(args.dsdir), args.gridsize)
+    num_classes, classes = preprocess(os.path.join(args.dsfile), os.path.join(dsdir), args.gridsize)
     print("num_classes: {0}".format(num_classes))
     if args.channels==3:
-        train_dataset = Terra(args.dsdir, data_augmentation=True)
-        test_dataset = Terra(args.dsdir, split='test')
+        train_dataset = Terra(dsdir, data_augmentation=True)
+        test_dataset = Terra(dsdir, split='test')
     elif args.channels==6:
-        train_dataset = TerraRGB(args.dsdir, data_augmentation=True)
-        test_dataset = TerraRGB(args.dsdir, split='test')
+        train_dataset = TerraRGB(dsdir, data_augmentation=True)
+        test_dataset = TerraRGB(dsdir, split='test')
     else:
         sys.exit("incorrect channel value")
 
