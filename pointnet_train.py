@@ -178,7 +178,7 @@ if __name__ == '__main__':
 
     tprint("test")
 
-    for i,data in tqdm(enumerate(test_dataloader, 0)):
+    for i,data in tqdm(enumerate(test_dataloader, 0),ncols=100):
         points, target = data
         points = points.transpose(2, 1)
         points, target = points.to(args.device), target.to(args.device)
@@ -192,6 +192,9 @@ if __name__ == '__main__':
         pred_np = pred_choice.cpu().data.numpy()
         target_np = target.cpu().data.numpy()
         predictions.append((points, pred_np, target_np))
+
+    tprint("result")
+    print(f'loss: {loss.item()} accuracy: {accuracy}')
 
     # print(m_accuracy)
     # print(m_loss)
