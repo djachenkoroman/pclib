@@ -24,6 +24,7 @@ from terra import Terra,TerraRGB
 import argparse
 from art import *
 import datetime
+import progress
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dsfile', type=str, default='', help='dataset file [default=null]')
@@ -48,6 +49,7 @@ params = {
 
 fn_templ='model_{0}_pointnet_ch{1}_gs{2}_nc{3}_np{4}_ep{5}({6})_acc{7}'
 dt_templ="{0}{1}{2}{3}{4}"
+s_templ = "[{0}: {1}/{2}] train loss: {3} accuracy: {4}"
 
 if __name__ == '__main__':
     tprint("pointnet train")
@@ -102,9 +104,9 @@ if __name__ == '__main__':
     num_batch = len(train_dataset) / params['batch_size']
     m_loss=[]
     m_accuracy=[]
-    for epoch in range(params['epochs']):
+    for epoch in tqdm(range(params['epochs'])):
         acc = 0
-        for i, data in tqdm(enumerate(train_dataloader),ncols=80):
+        for i, data in enumerate(train_dataloader):
             points, target = data
             points = points.transpose(2, 1)
             points, target = points.to(args.device), target.to(args.device)
@@ -122,6 +124,7 @@ if __name__ == '__main__':
             correct = pred_choice.eq(target.data).cpu().sum()
             # print('[%d: %d/%d] train loss: %f accuracy: %f' % (
             # epoch, i, num_batch, loss.item(), correct.item() / float(params['batch_size'] * params['npoints'])))
+            tqdm.write(s_templ.format(epoch, i, num_batch, loss.item(), correct.item() / float(params['batch_size'] * params['npoints'])))
 
             if i % 10 == 0:
                 j, data = next(enumerate(test_dataloader, 0))
@@ -137,6 +140,7 @@ if __name__ == '__main__':
                 correct = pred_choice.eq(target.data).cpu().sum()
                 acc = correct.item() / float(params['batch_size'] * params['npoints'])
                 # print('[%d: %d/%d] loss: %f accuracy: %f' % (epoch, i, num_batch, loss.item(), acc))
+                tqdm.write(s_templ.format(epoch, i, num_batch, loss.item(), loss.item(),acc))
         scheduler.step()
         # fn_templ = '/content/models/model_pointnet_ch{0}_np{1}_gs{2}_ep{3}_{4}_acc{5}'
         # fn_templ = '/content/models/model_pointnet_ch{0}_gs{1}_nc{2}_np{3}_ep{4}_{5}_acc{6}'
