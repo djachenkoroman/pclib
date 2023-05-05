@@ -28,8 +28,6 @@ import logging
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dsfile', type=str, default='', help='dataset file [default=null]')
-# parser.add_argument('--moddir', type=str, default='', help='models directory [default=null]')
-# parser.add_argument('--dsdir', type=str, default='', help='dataset directory [default=null]')
 parser.add_argument('--gridsize', type=int, default=50, help='gridsize [default=50]')
 parser.add_argument('--npoints', type=int, default=2400, help='npoints [default=2400]')
 parser.add_argument('--channels', type=int, default=3, help='channels [default=3]')
@@ -50,52 +48,43 @@ params = {
 fn_templ='model_{0}_pointnet_ch{1}_gs{2}_nc{3}_np{4}_ep{5}({6})_acc{7}'
 dt_templ="{0}{1}{2}{3}{4}"
 s_templ = "[{0}: {1}/{2}] train loss: {3} accuracy: {4}"
+input_params_templ = '''
+Current DIR: {0}
+DATE ID: {1}
+dataset file: {2}
+models directory: {3}
+dataset directory: {4}
+gridsize: {5}
+channels: {6}
+device: {7}
+epochs: {8}
+npoints: {9}
+num_classes: {10}
+'''
 
 if __name__ == '__main__':
     tprint("pointnet train")
 
     # Get current DIR
     maindir=os.getcwd()
-    print("Current DIR: {0}".format(maindir))
 
     # Get DATE and TIME
     date_time = datetime.datetime.now()
-    dt=dt_templ.format(date_time.year,str(date_time.month).zfill(2),str(date_time.day).zfill(2),str(date_time.hour).zfill(2),str(date_time.minute).zfill(2))
-    print(dt)
+    date_id=dt_templ.format(date_time.year, str(date_time.month).zfill(2), str(date_time.day).zfill(2), str(date_time.hour).zfill(2), str(date_time.minute).zfill(2))
 
-    logging.basicConfig(level=logging.INFO, filename=os.path.join(maindir,"log_{0}.log").format(dt), filemode="w")
-
-    msg_01="dataset file: {0}".format(args.dsfile)
-    print(msg_01)
-    logging.info(msg_01)
+    logging.basicConfig(level=logging.INFO, filename=os.path.join(maindir,"log_{0}.log").format(date_id), filemode="w")
 
     if not os.path.isfile(args.dsfile):
-        msg_02="dsfile not found"
-        logging.info(msg_02)
-        sys.exit(msg_02)
+        logging.info("dsfile not found")
+        sys.exit("dsfile not found")
 
-    moddir=os.path.join(maindir,"models_{0}".format(dt))
+    moddir=os.path.join(maindir,"models_{0}".format(date_id))
     os.makedirs(moddir, exist_ok=False)
 
-    msg_03="models directory: {0}".format(moddir)
-    print(msg_03)
-    logging.info(msg_03)
-
-    dsdir=os.path.join(maindir,"dsdir_{0}".format(dt))
+    dsdir=os.path.join(maindir,"dsdir_{0}".format(date_id))
     os.makedirs(dsdir, exist_ok=False)
 
-    msg_04="dataset directory: {0}".format(dsdir)
-    print(msg_04)
-    logging.info(msg_04)
-
-    print("gridsize: {0}".format(args.gridsize))
-    print("channels: {0}".format(args.channels))
-    print("device: {0}".format(args.device))
-    print("epochs: {0}".format(args.epochs))
-    print("npoints: {0}".format(params['npoints']))
-
     num_classes, classes = preprocess(os.path.join(args.dsfile), os.path.join(dsdir), args.gridsize)
-    print("num_classes: {0}".format(num_classes))
     if args.channels==3:
         train_dataset = Terra(dsdir, data_augmentation=True)
         test_dataset = Terra(dsdir, split='test')
@@ -103,7 +92,25 @@ if __name__ == '__main__':
         train_dataset = TerraRGB(dsdir, data_augmentation=True)
         test_dataset = TerraRGB(dsdir, split='test')
     else:
+        logging.info("incorrect channel value")
         sys.exit("incorrect channel value")
+
+    str_pr=input_params_templ.format(
+        maindir,
+        date_id,
+        args.dsfile,
+        moddir,
+        dsdir,
+        args.gridsize,
+        args.channels,
+        args.device,
+        args.epochs,
+        args.npoints,
+        num_classes
+    )
+
+    print(str_pr)
+    logging.info(str_pr)
 
 
     train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=params['batch_size'],
@@ -160,7 +167,7 @@ if __name__ == '__main__':
         # fn_templ = '/content/models/model_pointnet_ch{0}_gs{1}_nc{2}_np{3}_ep{4}_{5}_acc{6}'
         m_loss.append(loss.item())
         m_accuracy.append(acc)
-        torch.save(classifier.state_dict(), fn_templ.format(dt,args.channels,args.gridsize,num_classes,args.npoints,str(epoch).zfill(4),args.epochs, round(acc, 4)))
+        torch.save(classifier.state_dict(), fn_templ.format(date_id, args.channels, args.gridsize, num_classes, args.npoints, str(epoch).zfill(4), args.epochs, round(acc, 4)))
 
     ## benchmark mIOU
     shape_ious = []
