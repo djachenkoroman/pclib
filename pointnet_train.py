@@ -67,11 +67,11 @@ if __name__ == '__main__':
 
     msg_01="dataset file: {0}".format(args.dsfile)
     print(msg_01)
-    logging.INFO(str(msg_01))
+    logging.info(msg_01)
 
     if not os.path.isfile(args.dsfile):
         msg_02="dsfile not found"
-        logging.INFO(msg_02)
+        logging.info(msg_02)
         sys.exit(msg_02)
 
     moddir=os.path.join(maindir,"models_{0}".format(dt))
@@ -79,14 +79,14 @@ if __name__ == '__main__':
 
     msg_03="models directory: {0}".format(moddir)
     print(msg_03)
-    logging.INFOO(msg_03)
+    logging.info(msg_03)
 
     dsdir=os.path.join(maindir,"dsdir_{0}".format(dt))
     os.makedirs(dsdir, exist_ok=False)
 
     msg_04="dataset directory: {0}".format(dsdir)
     print(msg_04)
-    logging.INFO(msg_04)
+    logging.info(msg_04)
 
     print("gridsize: {0}".format(args.gridsize))
     print("channels: {0}".format(args.channels))
