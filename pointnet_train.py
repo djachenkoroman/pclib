@@ -121,7 +121,7 @@ if __name__ == '__main__':
             pred_choice = pred.data.max(1)[1]
             correct = pred_choice.eq(target.data).cpu().sum()
             # print('[%d: %d/%d] train loss: %f accuracy: %f' % (
-            epoch, i, num_batch, loss.item(), correct.item() / float(params['batch_size'] * params['npoints'])))
+            # epoch, i, num_batch, loss.item(), correct.item() / float(params['batch_size'] * params['npoints'])))
 
             if i % 10 == 0:
                 j, data = next(enumerate(test_dataloader, 0))
