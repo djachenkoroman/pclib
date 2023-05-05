@@ -145,7 +145,9 @@ if __name__ == '__main__':
             correct = pred_choice.eq(target.data).cpu().sum()
             # print('[%d: %d/%d] train loss: %f accuracy: %f' % (
             # epoch, i, num_batch, loss.item(), correct.item() / float(params['batch_size'] * params['npoints'])))
-            tqdm.write(s_templ.format(epoch, i, num_batch, loss.item(), correct.item() / float(params['batch_size'] * params['npoints'])))
+            # tqdm.write(s_templ.format(epoch, i, num_batch, loss.item(), correct.item() / float(params['batch_size'] * params['npoints'])))
+
+            logging.info(s_templ.format(epoch, i, num_batch, loss.item(), correct.item() / float(params['batch_size'] * params['npoints'])))
 
             if i % 10 == 0:
                 j, data = next(enumerate(test_dataloader, 0))
@@ -161,7 +163,8 @@ if __name__ == '__main__':
                 correct = pred_choice.eq(target.data).cpu().sum()
                 acc = correct.item() / float(params['batch_size'] * params['npoints'])
                 # print('[%d: %d/%d] loss: %f accuracy: %f' % (epoch, i, num_batch, loss.item(), acc))
-                tqdm.write(s_templ.format(epoch, i, num_batch, loss.item(), loss.item(),acc))
+                # tqdm.write(s_templ.format(epoch, i, num_batch, loss.item(), loss.item(),acc))
+                logging.info(s_templ.format(epoch, i, num_batch, loss.item(), loss.item(),acc))
         scheduler.step()
         # fn_templ = '/content/models/model_pointnet_ch{0}_np{1}_gs{2}_ep{3}_{4}_acc{5}'
         # fn_templ = '/content/models/model_pointnet_ch{0}_gs{1}_nc{2}_np{3}_ep{4}_{5}_acc{6}'
