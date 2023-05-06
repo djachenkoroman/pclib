@@ -170,7 +170,7 @@ if __name__ == '__main__':
         # fn_templ = '/content/models/model_pointnet_ch{0}_gs{1}_nc{2}_np{3}_ep{4}_{5}_acc{6}'
         m_loss.append(loss.item())
         m_accuracy.append(acc)
-        fnm=fn_templ.format(date_id, args.channels, args.gridsize, num_classes, args.npoints, str(epoch).zfill(4), args.epochs, round(acc, 4))
+        fnm=fn_templ.format(moddir,date_id, args.channels, args.gridsize, num_classes, args.npoints, str(epoch).zfill(4), args.epochs, round(acc, 4))
         print("{0}/{1}".format(moddir,fnm))
         # torch.save(classifier.state_dict(), )
 
