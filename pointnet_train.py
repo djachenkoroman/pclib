@@ -72,17 +72,18 @@ if __name__ == '__main__':
     date_time = datetime.datetime.now()
     date_id=dt_templ.format(date_time.year, str(date_time.month).zfill(2), str(date_time.day).zfill(2), str(date_time.hour).zfill(2), str(date_time.minute).zfill(2))
 
-    logging.basicConfig(level=logging.INFO, filename=os.path.join(maindir,"log_{0}.log").format(date_id), filemode="w")
-
-    if not os.path.isfile(args.dsfile):
-        logging.info("dsfile not found")
-        sys.exit("dsfile not found")
 
     moddir=os.path.join(maindir,"models_{0}".format(date_id))
     os.makedirs(moddir, exist_ok=False)
 
     dsdir=os.path.join(maindir,"dsdir_{0}".format(date_id))
     os.makedirs(dsdir, exist_ok=False)
+
+    logging.basicConfig(level=logging.INFO, filename=os.path.join(moddir,"log_{0}.log").format(date_id), filemode="w")
+
+    if not os.path.isfile(args.dsfile):
+        logging.info("dsfile not found")
+        sys.exit("dsfile not found")
 
     num_classes, classes = preprocess(os.path.join(args.dsfile), os.path.join(dsdir), args.gridsize)
     if args.channels==3:
@@ -190,16 +191,20 @@ if __name__ == '__main__':
         correct = pred_choice.eq(target.data).cpu().sum()
         accuracy=correct.item()/float(params["batch_size"] * params['npoints'])
         # tqdm.write(f'loss: {loss.item()} accuracy: { accuracy }')
+        logging.info(f'loss: {loss.item()} accuracy: { accuracy }')
         pred_np = pred_choice.cpu().data.numpy()
         target_np = target.cpu().data.numpy()
         predictions.append((points, pred_np, target_np))
 
     tprint("result")
     print(f'loss: {loss.item()} accuracy: {accuracy}')
+    logging.info(f'result loss: {loss.item()} accuracy: {accuracy}')
 
     # print(m_accuracy)
     # print(m_loss)
 
-    with open("data_{0}.txt".format(date_id), 'w') as filehandle:
+    data_fn=os.path.join(moddir,"data_{0}.txt".format(date_id))
+    with open(data_fn, 'w') as filehandle:
         for l,c in zip(m_loss,m_accuracy):
             filehandle.write("{0} {1}\n".format(str(l),str(c)))
+        logging.info("file {0} saved".format(data_fn))
