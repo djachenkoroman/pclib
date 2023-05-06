@@ -76,7 +76,7 @@ if __name__ == '__main__':
     moddir=os.path.join(maindir,"models_{0}_ch{1}_gs{2}_np{3}".format(date_id,args.channels,args.gridsize,args.npoints))
     os.makedirs(moddir, exist_ok=False)
 
-    dsdir=os.path.join(maindir,"dsdir_{0}".format(date_id))
+    dsdir=os.path.join(maindir,"dsdir_{0}_ch{1}_gs{2}_np{3}".format(date_id,args.channels,args.gridsize,args.npoints))
     os.makedirs(dsdir, exist_ok=False)
 
     logging.basicConfig(level=logging.INFO, filename=os.path.join(moddir,"log_{0}.log").format(date_id), filemode="w")
