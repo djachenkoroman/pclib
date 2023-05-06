@@ -166,13 +166,11 @@ if __name__ == '__main__':
                 # tqdm.write(s_templ.format(epoch, i, num_batch, loss.item(), loss.item(),acc))
                 logging.info(s_templ.format(epoch, i, num_batch, loss.item(), loss.item(),acc))
         scheduler.step()
-        # fn_templ = '/content/models/model_pointnet_ch{0}_np{1}_gs{2}_ep{3}_{4}_acc{5}'
-        # fn_templ = '/content/models/model_pointnet_ch{0}_gs{1}_nc{2}_np{3}_ep{4}_{5}_acc{6}'
         m_loss.append(loss.item())
         m_accuracy.append(acc)
         fnm=fn_templ.format(moddir,date_id, args.channels, args.gridsize, num_classes, args.npoints, str(epoch).zfill(4), args.epochs, round(acc, 4))
-        tqdm.write(os.path.join(moddir,fnm))
-        # torch.save(classifier.state_dict(), )
+        # tqdm.write(os.path.join(moddir,fnm))
+        torch.save(classifier.state_dict(), os.path.join(moddir,fnm))
 
     ## benchmark mIOU
     shape_ious = []
@@ -189,9 +187,7 @@ if __name__ == '__main__':
         pred_choice = pred.data.max(2)[1]
         correct = pred_choice.eq(target.data).cpu().sum()
         accuracy=correct.item()/float(params["batch_size"] * params['npoints'])
-        # print(f'loss: {loss.item()} accuracy: { accuracy }')
-        tqdm.write(f'loss: {loss.item()} accuracy: { accuracy }')
-
+        # tqdm.write(f'loss: {loss.item()} accuracy: { accuracy }')
         pred_np = pred_choice.cpu().data.numpy()
         target_np = target.cpu().data.numpy()
         predictions.append((points, pred_np, target_np))
