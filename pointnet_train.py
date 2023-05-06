@@ -169,9 +169,11 @@ if __name__ == '__main__':
         m_loss.append(loss.item())
         m_accuracy.append(acc)
         fnm=fn_templ.format(moddir,date_id, args.channels, args.gridsize, num_classes, args.npoints, str(epoch).zfill(4), args.epochs, round(acc, 4))
-        # tqdm.write(os.path.join(moddir,fnm))
-        torch.save(classifier.state_dict(), os.path.join(moddir,fnm))
 
+        fnm_full=os.path.join(moddir,fnm)
+        tqdm.write(fnm_full)
+        torch.save(classifier.state_dict(), fnm_full)
+        logging.info("model saved: {0}".format(fnm_full))
     ## benchmark mIOU
     shape_ious = []
     predictions = []
@@ -198,6 +200,6 @@ if __name__ == '__main__':
     # print(m_accuracy)
     # print(m_loss)
 
-    with open('data.txt', 'w') as filehandle:
+    with open("data_{0}.txt".format(date_id), 'w') as filehandle:
         for l,c in zip(m_loss,m_accuracy):
             filehandle.write("{0} {1}\n".format(str(l),str(c)))
