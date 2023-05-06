@@ -172,7 +172,7 @@ if __name__ == '__main__':
         m_accuracy.append(acc)
         fnm=fn_templ.format(moddir,date_id, args.channels, args.gridsize, num_classes, args.npoints, str(epoch).zfill(4), args.epochs, round(acc, 4))
         tqdm.write(os.path.join(moddir,fnm))
-        torch.save(classifier.state_dict(), )
+        # torch.save(classifier.state_dict(), )
 
     ## benchmark mIOU
     shape_ious = []
