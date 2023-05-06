@@ -45,7 +45,7 @@ params = {
     'npoints':args.npoints,
 }
 
-fn_templ='{0}/model_{1}_pointnet_ch{2}_gs{3}_nc{4}_np{5}_ep{6}({7})_acc{8}'
+fn_templ='model_{1}_pointnet_ch{2}_gs{3}_nc{4}_np{5}_ep{6}({7})_acc{8}'
 dt_templ="{0}{1}{2}{3}{4}"
 s_templ = "[{0}: {1}/{2}] train loss: {3} accuracy: {4}"
 input_params_templ = '''
@@ -171,8 +171,8 @@ if __name__ == '__main__':
         m_loss.append(loss.item())
         m_accuracy.append(acc)
         fnm=fn_templ.format(moddir,date_id, args.channels, args.gridsize, num_classes, args.npoints, str(epoch).zfill(4), args.epochs, round(acc, 4))
-        print("{0}/{1}".format(moddir,fnm))
-        # torch.save(classifier.state_dict(), )
+        tqdm.write(os.path.join(moddir,fnm))
+        torch.save(classifier.state_dict(), )
 
     ## benchmark mIOU
     shape_ious = []
