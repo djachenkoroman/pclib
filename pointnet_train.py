@@ -189,7 +189,8 @@ if __name__ == '__main__':
         pred_choice = pred.data.max(2)[1]
         correct = pred_choice.eq(target.data).cpu().sum()
         accuracy=correct.item()/float(params["batch_size"] * params['npoints'])
-        print(f'loss: {loss.item()} accuracy: { accuracy }')
+        # print(f'loss: {loss.item()} accuracy: { accuracy }')
+        tqdm.write(f'loss: {loss.item()} accuracy: { accuracy }')
 
         pred_np = pred_choice.cpu().data.numpy()
         target_np = target.cpu().data.numpy()
