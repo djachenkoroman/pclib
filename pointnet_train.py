@@ -215,6 +215,6 @@ if __name__ == '__main__':
         l=np.array(m_loss).T.tolist()
         print(m_loss)
         print(l)
-        # plt.plot(l)
-        # plt.show()
+        plt.plot(l)
+        plt.show()
         # plt.savefig(os.path.join(moddir,"loss_{0}_ch{1}_gs{2}_nc{3}_pn{4}.png".format(date_id, args.channels, args.gridsize, num_classes, args.npoints)))
