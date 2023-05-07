@@ -217,4 +217,4 @@ if __name__ == '__main__':
     plt.plot(data[:,[0]])
     plt.subplot(212)
     plt.plot(data[:,[1]])
-    plt.savefig(os.path.join(currdir,"gr.png"))
+    plt.savefig(os.path.join(currdir,"gr_{0}_ch{1}_gs{2}_nc{3}_np{4}_ep{5}.png".format(date_id, args.channels, args.gridsize, num_classes, args.npoints, args.epochs)))
