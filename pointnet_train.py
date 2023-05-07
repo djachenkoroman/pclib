@@ -212,6 +212,7 @@ if __name__ == '__main__':
 
     if args.creategraph==True:
         import matplotlib.pyplot as plt
-        plt.plot(m_loss.T)
+        l=list(map(list, zip(*m_loss)))
+        plt.plot(l)
         plt.show()
         plt.savefig(os.path.join(moddir,"loss_{0}_ch{1}_gs{2}_nc{3}_pn{4}.png".format(date_id, args.channels, args.gridsize, num_classes, args.npoints)))
