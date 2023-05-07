@@ -209,4 +209,11 @@ if __name__ == '__main__':
             filehandle.write("{0} {1}\n".format(str(l),str(c)))
         logging.info("file {0} saved".format(data_fn))
 
-    show_result_graph(data_fn)
+    # show_result_graph(data_fn)
+    data=np.loadtxt(data_fn,delimiter=" ")
+    currdir=os.path.dirname(path_file)
+    plt.subplot(211)
+    plt.plot(data[:,[0]])
+    plt.subplot(212)
+    plt.plot(data[:,[1]])
+    plt.savefig(os.path.join(currdir,"gr.png"))
