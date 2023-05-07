@@ -2,6 +2,7 @@ import os
 import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
+import matplotlib.pyplot as plt
 
 def test():
     print("Hello World!")
@@ -113,3 +114,6 @@ def pcshow_xyzrgb(data, x_column=0, y_column=1, z_column=2, r_column=3, g_column
                       selector=dict(mode='markers'))
     fig.show()
 
+
+def show_result_graph(path_file):
+    data=np.loadtxt(path_file,delimiter=" ")
