@@ -25,6 +25,7 @@ import argparse
 from art import *
 import datetime
 import logging
+import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dsfile', type=str, default='', help='dataset file [default=null]')
