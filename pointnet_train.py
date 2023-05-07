@@ -34,6 +34,7 @@ parser.add_argument('--npoints', type=int, default=2400, help='npoints [default=
 parser.add_argument('--channels', type=int, default=3, help='channels [default=3]')
 parser.add_argument('--device', type=str, default='cuda', help='current device [default=cuda]')
 parser.add_argument('--epochs', type=int, default=10, help='epochs [default=10]')
+parser.add_argument('--creategraph', type=bool, default=True, help='create graph [default=True]')
 
 args = parser.parse_args()
 
@@ -210,11 +211,11 @@ if __name__ == '__main__':
             filehandle.write("{0} {1}\n".format(str(l),str(c)))
         logging.info("file {0} saved".format(data_fn))
 
-    # show_result_graph(data_fn)
-    data=np.loadtxt(data_fn,delimiter=" ")
-    currdir=os.path.dirname(data_fn)
-    plt.subplot(211)
-    plt.plot(data[:,[0]])
-    plt.subplot(212)
-    plt.plot(data[:,[1]])
-    plt.savefig(os.path.join(currdir,"gr_{0}_ch{1}_gs{2}_nc{3}_np{4}_ep{5}.png".format(date_id, args.channels, args.gridsize, num_classes, args.npoints, args.epochs)))
+    if args.creategraph==True:
+        data=np.loadtxt(data_fn,delimiter=" ")
+        currdir=os.path.dirname(data_fn)
+        plt.subplot(211)
+        plt.plot(data[:,[0]])
+        plt.subplot(212)
+        plt.plot(data[:,[1]])
+        plt.savefig(os.path.join(currdir,"gr_{0}_ch{1}_gs{2}_nc{3}_np{4}_ep{5}.png".format(date_id, args.channels, args.gridsize, num_classes, args.npoints, args.epochs)))
