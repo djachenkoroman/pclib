@@ -123,4 +123,6 @@ def show_result_graph(path_file):
     data=np.loadtxt(path_file,delimiter=" ")
     currdir=os.path.dirname(path_file)
     plt.plot(data[:,[0]].tolist())
-    plt.savefig(os.path.join(currdir,"gr1.png"))
+    plt.savefig(os.path.join(currdir,"gr_loss.png"))
+    plt.plot(data[:,[1]].tolist())
+    plt.savefig(os.path.join(currdir,"gr_acc.png"))
