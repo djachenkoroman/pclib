@@ -212,7 +212,7 @@ if __name__ == '__main__':
 
     if args.creategraph==True:
         import matplotlib.pyplot as plt
-        l=list(map(list, zip(*m_loss)))
+        l=np.array(m_loss).T.tolist()
         print(m_loss)
         print(l)
         # plt.plot(l)
