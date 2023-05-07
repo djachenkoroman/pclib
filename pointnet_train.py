@@ -211,7 +211,7 @@ if __name__ == '__main__':
 
     # show_result_graph(data_fn)
     data=np.loadtxt(data_fn,delimiter=" ")
-    currdir=os.path.dirname(path_file)
+    currdir=os.path.dirname(data_fn)
     plt.subplot(211)
     plt.plot(data[:,[0]])
     plt.subplot(212)
