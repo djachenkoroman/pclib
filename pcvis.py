@@ -124,7 +124,6 @@ def show_result_graph(path_file):
     currdir=os.path.dirname(path_file)
     plt.subplot(211)
     plt.plot(data[:,[0]])
-    # plt.savefig(os.path.join(currdir,"gr_loss.png"))
     plt.subplot(212)
     plt.plot(data[:,[1]])
     plt.savefig(os.path.join(currdir,"gr.png"))

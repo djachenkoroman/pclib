@@ -18,7 +18,7 @@ import torch.optim as optim
 import pandas as pd
 import torch
 from pointnet import PointNetDenseCls
-from pcvis import pcshow_xyz,pcshow_xyzl,pcshow_xyzrgb
+from pcvis import pcshow_xyz,pcshow_xyzl,pcshow_xyzrgb, show_result_graph
 from utils import preprocess,pointcloud_pointnet_seg_real,pointcloud_pointnet_seg
 from terra import Terra,TerraRGB
 import argparse
@@ -208,3 +208,5 @@ if __name__ == '__main__':
         for l,c in zip(m_loss,m_accuracy):
             filehandle.write("{0} {1}\n".format(str(l),str(c)))
         logging.info("file {0} saved".format(data_fn))
+
+    show_result_graph(data_fn)
