@@ -33,6 +33,7 @@ parser.add_argument('--npoints', type=int, default=2400, help='npoints [default=
 parser.add_argument('--channels', type=int, default=3, help='channels [default=3]')
 parser.add_argument('--device', type=str, default='cuda', help='current device [default=cuda]')
 parser.add_argument('--epochs', type=int, default=10, help='epochs [default=10]')
+parser.add_argument('--creategraph', type=bool, default=True, help='show graph [default=True]')
 
 args = parser.parse_args()
 
@@ -208,3 +209,9 @@ if __name__ == '__main__':
         for l,c in zip(m_loss,m_accuracy):
             filehandle.write("{0} {1}\n".format(str(l),str(c)))
         logging.info("file {0} saved".format(data_fn))
+
+    if args.creategraph==True:
+        import matplotlib.pyplot as plt
+        plt.plot(m_loss)
+        plt.show()
+        plt.savefig(os.path.join(moddir,"loss_{0}_ch{1}_gs{2}_nc{3}_pn{4}.png".format(date_id, args.channels, args.gridsize, num_classes, args.npoints)))
