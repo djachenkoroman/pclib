@@ -117,7 +117,5 @@ def pcshow_xyzrgb(data, x_column=0, y_column=1, z_column=2, r_column=3, g_column
 
 def show_result_graph(path_file):
     data=np.loadtxt(path_file,delimiter=" ")
-    currdir=os.path.basename(os.path.dirname(path_file))
-    currdir2=os.path.dirname(path_file)
-    print(currdir)
-    print(currdir2)
+    currdir=os.path.dirname(path_file)
+    plt.plot(data[:,[0]].T.tolist())
