@@ -26,7 +26,7 @@ from art import *
 import random
 import string
 import datetime
-
+from progress.bar import IncrementalBar
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dsfile', type=str, default='', help='dataset file [default=null]')
