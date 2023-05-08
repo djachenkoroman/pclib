@@ -51,7 +51,8 @@ def pointnet_train(
         npoints=2400,
         channels=3,
         device='cpu',
-        epochs=10
+        epochs=10,
+        creategraph=True
     ):
 
     params = {
@@ -195,7 +196,7 @@ def pointnet_train(
             filehandle.write("{0} {1}\n".format(str(l),str(c)))
         logging.info("file {0} saved".format(data_fn))
 
-    if args.creategraph==True:
+    if creategraph==True:
         data=np.loadtxt(data_fn,delimiter=" ")
         currdir=os.path.dirname(data_fn)
         plt.subplot(211)
