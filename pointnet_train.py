@@ -27,16 +27,6 @@ import datetime
 import logging
 import matplotlib.pyplot as plt
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--dsfile', type=str, default='', help='dataset file [default=null]')
-parser.add_argument('--gridsize', type=int, default=50, help='gridsize [default=50]')
-parser.add_argument('--npoints', type=int, default=2400, help='npoints [default=2400]')
-parser.add_argument('--channels', type=int, default=3, help='channels [default=3]')
-parser.add_argument('--device', type=str, default='cuda', help='current device [default=cuda]')
-parser.add_argument('--epochs', type=int, default=10, help='epochs [default=10]')
-parser.add_argument('--creategraph', type=bool, default=True, help='create graph [default=True]')
-
-args = parser.parse_args()
 
 fn_templ='model_{1}_pointnet_ch{2}_gs{3}_nc{4}_np{5}_ep{6}({7})_acc{8}'
 dt_templ="{0}{1}{2}{3}{4}"
@@ -217,6 +207,17 @@ def pointnet_train(
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--dsfile', type=str, default='', help='dataset file [default=null]')
+    parser.add_argument('--gridsize', type=int, default=50, help='gridsize [default=50]')
+    parser.add_argument('--npoints', type=int, default=2400, help='npoints [default=2400]')
+    parser.add_argument('--channels', type=int, default=3, help='channels [default=3]')
+    parser.add_argument('--device', type=str, default='cuda', help='current device [default=cuda]')
+    parser.add_argument('--epochs', type=int, default=10, help='epochs [default=10]')
+    parser.add_argument('--creategraph', type=bool, default=True, help='create graph [default=True]')
+
+    args = parser.parse_args()
+
     pointnet_train(dsfile=args.dsfile,gridsize=args.gridsize,channels=args.channels,device=args.device,epochs=args.epochs)
     # tprint("pointnet train")
     #
