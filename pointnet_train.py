@@ -205,6 +205,7 @@ def pointnet_train(
         plt.plot(data[:,[1]])
         plt.savefig(os.path.join(currdir,"gr_{0}_ch{1}_gs{2}_nc{3}_np{4}_ep{5}.png".format(date_id, channels, gridsize, num_classes, npoints, epochs)))
 
+    return loss.item(),accuracy
 
 
 if __name__ == '__main__':
