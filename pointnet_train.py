@@ -207,6 +207,7 @@ def pointnet_train(
 
     end=datetime.datetime.now()
     sec= (end - start).total_seconds()
+    logging.info("time: {0}".format(sec))
     return round(loss.item(),4),round(accuracy,4),sec
 
 
