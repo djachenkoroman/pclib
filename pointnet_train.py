@@ -78,8 +78,6 @@ def pointnet_train(
     date_id=dt_templ.format(date_time.year, str(date_time.month).zfill(2), str(date_time.day).zfill(2), str(date_time.hour).zfill(2), str(date_time.minute).zfill(2))
     moddir=os.path.join(maindir,"models_{0}_ch{1}_gs{2}_np{3}".format(date_id,channels,gridsize,npoints))
     os.makedirs(moddir, exist_ok=False)
-    moddir=os.path.join(maindir,"models_{0}_ch{1}_gs{2}_np{3}".format(date_id,channels,gridsize,npoints))
-    os.makedirs(moddir, exist_ok=False)
     dsdir=os.path.join(maindir,"dsdir_{0}_ch{1}_gs{2}_np{3}".format(date_id,channels,gridsize,npoints))
     os.makedirs(dsdir, exist_ok=False)
     logging.basicConfig(level=logging.INFO, filename=os.path.join(moddir,"log_{0}.log").format(date_id), filemode="w")
