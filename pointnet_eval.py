@@ -25,6 +25,8 @@ import argparse
 from art import *
 import random
 import string
+import datetime
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dsfile', type=str, default='', help='dataset file [default=null]')
@@ -46,8 +48,14 @@ num_classes: {4}
 channels: {5}
 device: {6}
 '''
+fn_templ='output_{0}_pointnet_ch{1}_gs{2}_nc{3}_np{4}.txt'
+dt_templ="{0}{1}{2}{3}{4}"
 
 if __name__ == '__main__':
+
+    date_time = datetime.datetime.now()
+    date_id=dt_templ.format(date_time.year, str(date_time.month).zfill(2), str(date_time.day).zfill(2), str(date_time.hour).zfill(2), str(date_time.minute).zfill(2))
+
     tprint("pointnet evaluate")
 
     if not os.path.isfile(args.dsfile):
@@ -90,6 +98,12 @@ if __name__ == '__main__':
     grid_size=args.gridsize
     npoints=args.npoints
 
+    rng1=range(x_min, x_max - grid_size, grid_size)
+    rng2=range(y_min, y_max - grid_size, grid_size)
+    rng3=range(len(rng1)*len(rng2))
+    bar = IncrementalBar('read data', max=len(rng3))
+
+
     for i in range(x_min, x_max - grid_size, grid_size):
         for j in range(y_min, y_max - grid_size, grid_size):
             arr = data[
@@ -99,6 +113,7 @@ if __name__ == '__main__':
             arr=arr[choice,:]
             np.savetxt(fn,arr,delimiter=',',fmt=fmt)
             idx += 1
+            bar.next()
     del data
 
     model = PointNetDenseCls(channels=args.channels, num_classes=args.num_classes)
@@ -133,7 +148,7 @@ if __name__ == '__main__':
         pred = pred_choice.data.cpu().numpy()
         out=np.hstack([data[:,:3], pred.T])
         output.append(out)
-    fn="output.txt"
+    fn=fn_templ.format(date_id,args.channels,args.gridsize,args.num_classes,args.npoints)
     output = np.vstack(output)
     print(f'output.shape: {output.shape}')
     np.savetxt(fn,output,delimiter=',', fmt = fmt)
