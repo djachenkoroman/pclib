@@ -215,8 +215,8 @@ def pointnet_train(
 
 
 
-if __name__ == '__main__':
-    pointnet_train(dsfile=args.dsfile,gridsize=args.gridsize,channels=args.channels,device=args.device,epochs=args.epochs)
+# if __name__ == '__main__':
+#     pointnet_train(dsfile=args.dsfile,gridsize=args.gridsize,channels=args.channels,device=args.device,epochs=args.epochs)
     # tprint("pointnet train")
     #
     # # Get current DIR
