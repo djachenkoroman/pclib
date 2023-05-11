@@ -4,9 +4,37 @@ import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from scipy.interpolate import griddata
 
 def test():
     print("Hello World!")
+
+def show3dgraph(px,py,pz,grid_step=100):
+
+    x = np.array(px)
+    y = np.array(py)
+    z = np.array(pz)
+
+    # x = np.array([25, 25, 25, 50, 50, 50, 75, 75, 75, 100, 100, 100])
+    # y = np.array([2500, 5000, 7500, 2500, 5000, 7500, 2500, 5000, 7500, 2500, 5000, 7500])
+    # z = np.array([0.944, 0.4719, 0.3145, 0.9279, 0.4699, 0.3083, 0.2344, 0.1168, 0.0778, 0.9165, 0.4627, 0.3093])
+
+    # создаем новую сетку для интерполяции
+    xi = np.linspace(min(x), max(x), grid_step)
+    yi = np.linspace(min(y), max(y), grid_step)
+    Xi, Yi = np.meshgrid(xi, yi)
+
+    # интерполируем значения функции на новой сетке
+    Zi = griddata((x, y), z, (Xi, Yi), method='linear')
+
+    # строим поверхность
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    ax.plot_surface(Xi, Yi, Zi, cmap='hot')
+
+    # настраиваем отображение
+    ax.set_xlabel
 
 
 def visualize_rotate(data):
