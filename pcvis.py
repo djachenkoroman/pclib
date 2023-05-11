@@ -31,7 +31,7 @@ def show3dgraph(px,py,pz,grid_step=100):
     # строим поверхность
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-    ax.plot_surface(Xi, Yi, Zi, cmap='hot')
+    ax.plot_surface(Xi, Yi, Zi, cmap='jet')
 
     # настраиваем отображение
     ax.set_xlabel
